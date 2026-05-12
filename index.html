@@ -1,0 +1,660 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Nua Modular — Live Better, Build Smarter</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,300;0,9..144,400;0,9..144,500;1,9..144,400&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet" />
+  <script src="https://cdn.tailwindcss.com"></script>
+  <style>
+    :root {
+      --brand:      #1E5132;
+      --brand-deep: #143421;
+      --brand-mid:  #2A6B45;
+      --brand-sage: #4A8B5C;
+      --bg-paper:   #FBFAF6;
+      --bg-cream:   #F5F2EB;
+      --text-ink:   #0E1A12;
+      --text-mute:  #7A857E;
+      --rule:       rgba(30,81,50,0.18);
+    }
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    html { scroll-behavior: smooth; }
+    body {
+      background: var(--bg-paper);
+      color: var(--text-ink);
+      font-family: 'Inter', sans-serif;
+      font-size: 16px;
+      line-height: 1.55;
+      -webkit-font-smoothing: antialiased;
+    }
+    h1, h2, h3 {
+      font-family: 'Fraunces', serif;
+      text-wrap: pretty;
+      letter-spacing: -0.02em;
+      font-weight: 400;
+    }
+
+    /* NAV */
+    #nav {
+      position: fixed; top: 0; left: 0; right: 0; z-index: 100;
+      transition: background 0.3s, border-color 0.3s;
+    }
+    #nav.scrolled {
+      background: var(--bg-paper);
+      border-bottom: 1px solid var(--rule);
+    }
+    .nav-inner {
+      max-width: 1180px; margin: 0 auto;
+      display: flex; align-items: center; justify-content: space-between;
+      height: 64px; padding: 0 24px;
+    }
+    .nav-links { display: flex; align-items: center; gap: 32px; }
+    .nav-link {
+      font-family: 'Inter', sans-serif; font-size: 13px; font-weight: 400;
+      letter-spacing: 0.08em; text-transform: uppercase;
+      color: var(--text-ink); opacity: 0.65; text-decoration: none;
+      transition: opacity 0.2s;
+    }
+    .nav-link:hover { opacity: 1; }
+
+    /* EYEBROW */
+    .eyebrow {
+      font-family: 'Inter', sans-serif; font-size: 11px; font-weight: 600;
+      letter-spacing: 0.22em; text-transform: uppercase; color: var(--brand-sage);
+    }
+
+    /* BUTTONS */
+    .btn {
+      display: inline-flex; align-items: center; justify-content: center;
+      font-family: 'Inter', sans-serif; font-size: 13px; font-weight: 600;
+      letter-spacing: 0.06em; text-transform: uppercase;
+      padding: 13px 28px; border-radius: 999px;
+      text-decoration: none; cursor: pointer; border: none;
+      transition: background 0.2s, color 0.2s, border-color 0.2s;
+    }
+    .btn:focus-visible { outline: 2px solid var(--brand-mid); outline-offset: 2px; }
+    .btn-primary { background: var(--brand); color: #fff; }
+    .btn-primary:hover { background: var(--brand-mid); }
+    .btn-secondary { background: transparent; color: var(--brand); border: 1.5px solid var(--brand); }
+    .btn-secondary:hover { border-color: var(--brand-mid); color: var(--brand-mid); }
+    .btn-light { background: #fff; color: var(--brand); }
+    .btn-light:hover { background: var(--bg-cream); }
+    .btn-ghost-light {
+      background: transparent; color: rgba(245,242,235,0.85);
+      border: 1.5px solid rgba(245,242,235,0.4);
+    }
+    .btn-ghost-light:hover { border-color: rgba(245,242,235,0.7); color: #fff; }
+    .btn-sm { padding: 10px 20px; font-size: 12px; }
+
+    /* FADE UP */
+    .fade-up {
+      opacity: 0; transform: translateY(20px);
+      transition: opacity 0.55s ease, transform 0.55s ease;
+    }
+    .fade-up.in { opacity: 1; transform: none; }
+    @media (prefers-reduced-motion: reduce) {
+      .fade-up { opacity: 1; transform: none; transition: none; }
+    }
+
+    /* MOBILE MENU */
+    #mobile-menu {
+      display: none; position: fixed; inset: 0; z-index: 200;
+      background: var(--bg-paper); flex-direction: column;
+    }
+    #mobile-menu.open { display: flex; }
+    .mobile-nav-link {
+      display: block; padding: 18px 0;
+      border-bottom: 1px solid var(--rule);
+      font-family: 'Inter', sans-serif; font-size: 14px;
+      letter-spacing: 0.08em; text-transform: uppercase;
+      color: var(--text-ink); text-decoration: none;
+    }
+
+    /* SECTION RHYTHM */
+    .section { padding: 96px 24px; }
+    .section-sm { padding: 56px 24px; }
+    .wrap { max-width: 1180px; margin: 0 auto; }
+
+    /* RULE DIVIDER */
+    .rule-line { border: none; border-top: 1px solid var(--rule); }
+
+    /* CARD HOVER IMAGE */
+    .card-img { transition: transform 0.6s cubic-bezier(0.25,1,0.5,1); }
+    .img-wrap { overflow: hidden; }
+    .img-wrap:hover .card-img { transform: scale(1.04); }
+
+    /* RESPONSIVE */
+    .grid-2 { display: grid; grid-template-columns: 1fr 1fr; gap: 64px; align-items: center; }
+    .grid-3 { display: grid; grid-template-columns: repeat(3,1fr); gap: 24px; }
+    .grid-4 { display: grid; grid-template-columns: repeat(4,1fr); gap: 8px; }
+    .grid-aside { display: grid; grid-template-columns: 1fr 2fr; gap: 80px; align-items: start; }
+    .grid-footer { display: grid; grid-template-columns: 2fr 1fr 1fr; gap: 48px; }
+
+    @media (max-width: 900px) {
+      .section { padding: 64px 20px; }
+      .grid-2 { grid-template-columns: 1fr; gap: 40px; }
+      .grid-3 { grid-template-columns: 1fr; }
+      .grid-4 { grid-template-columns: 1fr 1fr; }
+      .grid-aside { grid-template-columns: 1fr; gap: 40px; }
+      .grid-footer { grid-template-columns: 1fr 1fr; }
+      .nav-links { display: none; }
+      #menu-btn { display: block; }
+    }
+    @media (min-width: 901px) {
+      #menu-btn { display: none; }
+    }
+    @media (max-width: 600px) {
+      .section { padding: 56px 16px; }
+      .grid-4 { grid-template-columns: 1fr; }
+      .grid-footer { grid-template-columns: 1fr; }
+      .hero-btns { flex-direction: column; align-items: flex-start; }
+      .contact-grid { grid-template-columns: 1fr !important; }
+    }
+  </style>
+</head>
+<body>
+
+<!-- ── NAV ────────────────────────────────────────────────── -->
+<nav id="nav">
+  <div class="nav-inner">
+    <a href="/" aria-label="Nua Modular home">
+      <img src="brand_assets/Logo - Background Removed.png"
+           alt="Nua Modular" style="height:40px;width:auto" />
+    </a>
+    <div class="nav-links">
+      <a href="#models" class="nav-link">Models</a>
+      <a href="#about" class="nav-link">About</a>
+      <a href="#how-it-works" class="nav-link">How It Works</a>
+      <a href="#contact" class="btn btn-primary" style="margin-left:8px">Get a Quote</a>
+    </div>
+    <button id="menu-btn" aria-label="Open menu" style="background:none;border:none;cursor:pointer;padding:4px">
+      <svg width="24" height="18" viewBox="0 0 24 18" fill="none">
+        <line x1="0" y1="1.5" x2="24" y2="1.5" stroke="currentColor" stroke-width="1.5"/>
+        <line x1="0" y1="9" x2="24" y2="9" stroke="currentColor" stroke-width="1.5"/>
+        <line x1="0" y1="16.5" x2="24" y2="16.5" stroke="currentColor" stroke-width="1.5"/>
+      </svg>
+    </button>
+  </div>
+</nav>
+
+<!-- ── MOBILE MENU ────────────────────────────────────────── -->
+<div id="mobile-menu">
+  <div style="display:flex;align-items:center;justify-content:space-between;height:64px;padding:0 24px;border-bottom:1px solid var(--rule)">
+    <img src="brand_assets/Logo - Background Removed.png" alt="Nua Modular" style="height:40px;width:auto" />
+    <button id="menu-close" aria-label="Close menu" style="background:none;border:none;cursor:pointer;padding:4px">
+      <svg width="20" height="20" viewBox="0 0 20 20" fill="none">
+        <line x1="2" y1="2" x2="18" y2="18" stroke="currentColor" stroke-width="1.5"/>
+        <line x1="18" y1="2" x2="2" y2="18" stroke="currentColor" stroke-width="1.5"/>
+      </svg>
+    </button>
+  </div>
+  <nav style="padding:24px">
+    <a href="#models" class="mobile-nav-link">Models</a>
+    <a href="#about" class="mobile-nav-link">About</a>
+    <a href="#how-it-works" class="mobile-nav-link">How It Works</a>
+    <a href="#contact" class="btn btn-primary" style="width:100%;margin-top:24px">Get a Quote</a>
+  </nav>
+</div>
+
+<!-- ── HERO ───────────────────────────────────────────────── -->
+<section style="position:relative;min-height:100vh;display:flex;align-items:flex-end;padding-bottom:80px">
+  <img src="brand_assets/nua-pod-cliff-golden (1).jpg"
+       alt="Nua Modular pod at the Irish cliffs at golden hour"
+       style="position:absolute;inset:0;width:100%;height:100%;object-fit:cover;object-position:center" />
+  <div style="position:absolute;inset:0;background:linear-gradient(to top,rgba(14,26,18,0.8) 0%,rgba(14,26,18,0.25) 55%,rgba(14,26,18,0) 100%)"></div>
+  <div class="wrap" style="position:relative;width:100%;padding-left:24px;padding-right:24px">
+    <p class="eyebrow fade-up" style="color:rgba(245,242,235,0.65);margin-bottom:20px">Live Better, Build Smarter</p>
+    <h1 class="fade-up" style="font-size:clamp(52px,7.5vw,92px);line-height:0.95;color:#F5F2EB;max-width:720px;margin-bottom:24px">
+      A home,<br />ready<br /><em>in weeks.</em>
+    </h1>
+    <p class="fade-up" style="font-size:16px;line-height:1.65;color:rgba(245,242,235,0.75);max-width:460px;margin-bottom:36px">
+      Factory-built modular pods, delivered and installed across Ireland. From garden offices to full living spaces, delivered on a flatbed, move-in in a day.
+    </p>
+    <div class="hero-btns fade-up" style="display:flex;flex-wrap:wrap;gap:12px">
+      <a href="#models" class="btn btn-light">View Our Range</a>
+      <a href="#contact" class="btn btn-ghost-light">Get a Free Quote</a>
+    </div>
+  </div>
+</section>
+
+<!-- ── STATS BAR ──────────────────────────────────────────── -->
+<section style="background:var(--brand);padding:48px 24px">
+  <div class="wrap">
+    <div style="display:grid;grid-template-columns:repeat(4,1fr);gap:0">
+      <div style="text-align:center;padding:0 24px;border-right:1px solid rgba(74,139,92,0.25)">
+        <p style="font-family:'Fraunces',serif;font-size:42px;font-weight:400;color:#F5F2EB;line-height:1;margin-bottom:6px">3<span style="color:var(--brand-sage)">+</span></p>
+        <p class="eyebrow" style="color:rgba(245,242,235,0.45)">Models</p>
+      </div>
+      <div style="text-align:center;padding:0 24px;border-right:1px solid rgba(74,139,92,0.25)">
+        <p style="font-family:'Fraunces',serif;font-size:42px;font-weight:400;color:#F5F2EB;line-height:1;margin-bottom:6px">14<span style="color:var(--brand-sage);font-size:28px"> wks</span></p>
+        <p class="eyebrow" style="color:rgba(245,242,235,0.45)">Lead Time Avg.</p>
+      </div>
+      <div style="text-align:center;padding:0 24px;border-right:1px solid rgba(74,139,92,0.25)">
+        <p style="font-family:'Fraunces',serif;font-size:42px;font-weight:400;color:#F5F2EB;line-height:1;margin-bottom:6px">A<span style="color:var(--brand-sage)"> Rated</span></p>
+        <p class="eyebrow" style="color:rgba(245,242,235,0.45)">BER Energy Rating</p>
+      </div>
+      <div style="text-align:center;padding:0 24px">
+        <p style="font-family:'Fraunces',serif;font-size:42px;font-weight:400;color:#F5F2EB;line-height:1;margin-bottom:6px">50<span style="color:var(--brand-sage);font-size:28px"> yr</span></p>
+        <p class="eyebrow" style="color:rgba(245,242,235,0.45)">Structural Warranty</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ── ABOUT ──────────────────────────────────────────────── -->
+<section id="about" class="section" style="background:var(--bg-cream)">
+  <div class="wrap grid-2">
+    <div>
+      <p class="eyebrow fade-up" style="margin-bottom:20px">About Nua Modular</p>
+      <h2 class="fade-up" style="font-size:clamp(34px,4vw,48px);line-height:1.05;color:var(--text-ink);margin-bottom:24px">
+        A new way to<br /><em>expand your space.</em>
+      </h2>
+      <p class="fade-up" style="font-size:16px;line-height:1.7;color:rgba(14,26,18,0.65);margin-bottom:16px">
+        The word "Nua" means new in Irish. It captures what we stand for: a new approach to space, and a new standard for what modular can be.
+      </p>
+      <p class="fade-up" style="font-size:16px;line-height:1.7;color:rgba(14,26,18,0.65);margin-bottom:32px">
+        We deliver and install factory-built pods finished to a high architectural standard, ready to use in weeks, not months. No traditional construction timeline. No surprises on cost.
+      </p>
+      <a href="#models" class="btn btn-primary fade-up">View Our Range</a>
+    </div>
+    <div class="fade-up img-wrap" style="border-radius:4px;box-shadow:0 2px 12px rgba(0,0,0,0.08)">
+      <img src="brand_assets/nua-pod-seaside_v2.jpg"
+           alt="Nua Modular pod by the Irish seaside"
+           class="card-img" style="width:100%;height:520px;object-fit:cover;border-radius:4px;display:block" />
+    </div>
+  </div>
+</section>
+
+<!-- ── MODELS ─────────────────────────────────────────────── -->
+<section id="models" class="section" style="background:var(--bg-paper)">
+  <div class="wrap">
+    <div style="margin-bottom:56px">
+      <p class="eyebrow fade-up" style="margin-bottom:16px">Our Range</p>
+      <h2 class="fade-up" style="font-size:clamp(34px,4vw,48px);line-height:1.05;max-width:500px">
+        Three models.<br />One for every need.
+      </h2>
+    </div>
+
+    <div class="grid-3">
+
+      <!-- Nua Focus -->
+      <div class="fade-up" style="border:1px solid var(--rule);border-radius:4px;overflow:hidden;background:var(--bg-paper)">
+        <div class="img-wrap" style="position:relative">
+          <img src="brand_assets/Nua Focus - Garden .jpg"
+               alt="Nua Focus compact garden pod"
+               class="card-img" style="width:100%;height:280px;object-fit:cover;display:block" />
+          <div style="position:absolute;inset:0;background:linear-gradient(to top,rgba(14,26,18,0.35) 0%,transparent 55%)"></div>
+        </div>
+        <div style="padding:28px">
+          <p class="eyebrow" style="color:var(--brand-sage);margin-bottom:10px">Office · Studio · Retreat</p>
+          <h3 style="font-size:26px;margin-bottom:12px">Nua Focus</h3>
+          <p style="font-size:15px;line-height:1.65;color:rgba(14,26,18,0.62);margin-bottom:24px">
+            Our compact pod. 6 m² of fully insulated, wired space, ideal as a garden office, creative studio or quiet retreat, steps from the house.
+          </p>
+          <hr class="rule-line" style="margin-bottom:20px" />
+          <div style="display:flex;align-items:center;justify-content:space-between">
+            <div>
+              <p class="eyebrow" style="color:var(--text-mute);margin-bottom:2px">Size</p>
+              <p style="font-family:'Fraunces',serif;font-size:18px;color:var(--text-ink)">6 m²</p>
+            </div>
+            <a href="#contact" class="btn btn-secondary btn-sm">Enquire</a>
+          </div>
+        </div>
+      </div>
+
+      <!-- Nua Nest -->
+      <div class="fade-up" style="border:1px solid var(--rule);border-radius:4px;overflow:hidden;background:var(--bg-paper)">
+        <div class="img-wrap" style="position:relative">
+          <img src="brand_assets/Nua Nest - Garden .jpg"
+               alt="Nua Nest garden living pod"
+               class="card-img" style="width:100%;height:280px;object-fit:cover;display:block" />
+          <div style="position:absolute;inset:0;background:linear-gradient(to top,rgba(14,26,18,0.35) 0%,transparent 55%)"></div>
+        </div>
+        <div style="padding:28px">
+          <p class="eyebrow" style="color:var(--brand-sage);margin-bottom:10px">Guest Suite · Granny Flat · Rental</p>
+          <h3 style="font-size:26px;margin-bottom:12px">Nua Nest</h3>
+          <p style="font-size:15px;line-height:1.65;color:rgba(14,26,18,0.62);margin-bottom:24px">
+            A full living pod with kitchenette, bathroom and bedroom. Ideal for guest accommodation, multi-generational living or short-term rental. One-bed configuration.
+          </p>
+          <hr class="rule-line" style="margin-bottom:20px" />
+          <div style="display:flex;align-items:center;justify-content:space-between">
+            <div>
+              <p class="eyebrow" style="color:var(--text-mute);margin-bottom:2px">Config</p>
+              <p style="font-family:'Fraunces',serif;font-size:18px;color:var(--text-ink)">1-bed</p>
+            </div>
+            <a href="#contact" class="btn btn-secondary btn-sm">Enquire</a>
+          </div>
+        </div>
+      </div>
+
+      <!-- Nua Ultra -->
+      <div class="fade-up" style="border:1px solid var(--rule);border-radius:4px;overflow:hidden;background:var(--bg-paper);position:relative">
+        <div style="position:absolute;top:16px;right:16px;z-index:10;background:var(--brand);color:#fff;font-family:'Inter',sans-serif;font-size:10px;font-weight:600;letter-spacing:0.18em;text-transform:uppercase;padding:5px 12px;border-radius:999px">Showcase</div>
+        <div class="img-wrap" style="position:relative">
+          <img src="brand_assets/nua-pod-cliff-golden (1).jpg"
+               alt="Nua Ultra pod at the Irish cliffs"
+               class="card-img" style="width:100%;height:280px;object-fit:cover;display:block" />
+          <div style="position:absolute;inset:0;background:linear-gradient(to top,rgba(14,26,18,0.35) 0%,transparent 55%)"></div>
+        </div>
+        <div style="padding:28px">
+          <p class="eyebrow" style="color:var(--brand-sage);margin-bottom:10px">Full Home · Family Annex · Rental</p>
+          <h3 style="font-size:26px;margin-bottom:12px">Nua Ultra</h3>
+          <p style="font-size:15px;line-height:1.65;color:rgba(14,26,18,0.62);margin-bottom:24px">
+            Our largest pod. Builds on the Nest with more space, more storage and more flexibility. Configurable as a one or two-bedroom, for permanent living, family annexes or high-end short-term rental.
+          </p>
+          <hr class="rule-line" style="margin-bottom:20px" />
+          <div style="display:flex;align-items:center;justify-content:space-between">
+            <div>
+              <p class="eyebrow" style="color:var(--text-mute);margin-bottom:2px">Config</p>
+              <p style="font-family:'Fraunces',serif;font-size:18px;color:var(--text-ink)">1 or 2-bed</p>
+            </div>
+            <a href="#contact" class="btn btn-primary btn-sm">Enquire</a>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<!-- ── USE CASES ──────────────────────────────────────────── -->
+<section class="section" style="background:var(--bg-cream)">
+  <div class="wrap grid-aside">
+    <div>
+      <p class="eyebrow fade-up" style="margin-bottom:16px">Use Cases</p>
+      <h2 class="fade-up" style="font-size:clamp(30px,3.5vw,42px);line-height:1.05;margin-bottom:16px">
+        One pod.<br />Many uses.
+      </h2>
+      <p class="fade-up" style="font-size:15px;line-height:1.65;color:rgba(14,26,18,0.6)">
+        Each unit is self-contained, fully serviced and quick to install. Our customers find new uses for them all the time.
+      </p>
+    </div>
+    <div class="fade-up" style="display:grid;grid-template-columns:1fr 1fr;gap:1px;background:var(--rule)">
+
+      <div style="background:var(--bg-cream);padding:28px 24px">
+        <h3 style="font-size:19px;margin-bottom:8px">Home Office</h3>
+        <p style="font-size:14px;line-height:1.6;color:var(--text-mute)">A permanent, professional workspace separate from the main house. Switch off at the end of the day.</p>
+      </div>
+      <div style="background:var(--bg-cream);padding:28px 24px">
+        <h3 style="font-size:19px;margin-bottom:8px">Guest Accommodation</h3>
+        <p style="font-size:14px;line-height:1.6;color:var(--text-mute)">A comfortable, private space for visiting family and friends, without the cost of an extension.</p>
+      </div>
+      <div style="background:var(--bg-cream);padding:28px 24px">
+        <h3 style="font-size:19px;margin-bottom:8px">Granny Flat</h3>
+        <p style="font-size:14px;line-height:1.6;color:var(--text-mute)">Multi-generational living with independence and privacy on both sides.</p>
+      </div>
+      <div style="background:var(--bg-cream);padding:28px 24px">
+        <h3 style="font-size:19px;margin-bottom:8px">Short-Term Rental</h3>
+        <p style="font-size:14px;line-height:1.6;color:var(--text-mute)">Ready-to-let units for Airbnb, glamping sites, tourism and hospitality.</p>
+      </div>
+      <div style="background:var(--bg-cream);padding:28px 24px;grid-column:span 2">
+        <h3 style="font-size:19px;margin-bottom:8px">Studios &amp; Creative Spaces</h3>
+        <p style="font-size:14px;line-height:1.6;color:var(--text-mute)">Naturally lit pods for artists, musicians, yoga teachers and content creators.</p>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<!-- ── WHAT SETS NUA APART ────────────────────────────────── -->
+<section class="section" style="background:var(--brand-deep)">
+  <div class="wrap">
+    <div style="margin-bottom:56px">
+      <p class="eyebrow fade-up" style="margin-bottom:16px;color:rgba(74,139,92,0.85)">What Sets Nua Apart</p>
+      <h2 class="fade-up" style="font-size:clamp(34px,4vw,48px);line-height:1.05;color:#F5F2EB;max-width:520px">
+        Plenty of companies sell pods.<br />Here's the difference.
+      </h2>
+    </div>
+    <div style="display:grid;grid-template-columns:repeat(3,1fr);gap:1px;background:rgba(74,139,92,0.18)" class="differentiators">
+      <div class="fade-up" style="background:var(--brand-deep);padding:36px 28px">
+        <p style="font-family:'Fraunces',serif;font-size:13px;color:var(--brand-sage);letter-spacing:0.12em;margin-bottom:14px">01</p>
+        <h3 style="font-size:21px;color:#F5F2EB;margin-bottom:10px">Architect-led design</h3>
+        <p style="font-size:14px;line-height:1.6;color:rgba(245,242,235,0.48)">Proportions, light, flow and finish are considered in detail, not bolted on at the end.</p>
+      </div>
+      <div class="fade-up" style="background:var(--brand-deep);padding:36px 28px">
+        <p style="font-family:'Fraunces',serif;font-size:13px;color:var(--brand-sage);letter-spacing:0.12em;margin-bottom:14px">02</p>
+        <h3 style="font-size:21px;color:#F5F2EB;margin-bottom:10px">Built to last</h3>
+        <p style="font-size:14px;line-height:1.6;color:rgba(245,242,235,0.48)">Steel-framed structures, high-performance insulation, triple-glazed options. Built for decades, not years.</p>
+      </div>
+      <div class="fade-up" style="background:var(--brand-deep);padding:36px 28px">
+        <p style="font-family:'Fraunces',serif;font-size:13px;color:var(--brand-sage);letter-spacing:0.12em;margin-bottom:14px">03</p>
+        <h3 style="font-size:21px;color:#F5F2EB;margin-bottom:10px">Energy efficient by default</h3>
+        <p style="font-size:14px;line-height:1.6;color:rgba(245,242,235,0.48)">Low U-values, airtight construction, heat-recovery ventilation. Comfortable year-round, cheap to run.</p>
+      </div>
+      <div class="fade-up" style="background:var(--brand-deep);padding:36px 28px">
+        <p style="font-family:'Fraunces',serif;font-size:13px;color:var(--brand-sage);letter-spacing:0.12em;margin-bottom:14px">04</p>
+        <h3 style="font-size:21px;color:#F5F2EB;margin-bottom:10px">Fast delivery</h3>
+        <p style="font-size:14px;line-height:1.6;color:rgba(245,242,235,0.48)">Order to install in 8 to 12 weeks, not the 6 to 12 months of traditional construction.</p>
+      </div>
+      <div class="fade-up" style="background:var(--brand-deep);padding:36px 28px">
+        <p style="font-family:'Fraunces',serif;font-size:13px;color:var(--brand-sage);letter-spacing:0.12em;margin-bottom:14px">05</p>
+        <h3 style="font-size:21px;color:#F5F2EB;margin-bottom:10px">Fixed pricing</h3>
+        <p style="font-size:14px;line-height:1.6;color:rgba(245,242,235,0.48)">A clear, all-inclusive quote up front. No surprises, no creeping costs, no "unforeseen" extras.</p>
+      </div>
+      <div class="fade-up" style="background:var(--brand-deep);padding:36px 28px">
+        <p style="font-family:'Fraunces',serif;font-size:13px;color:var(--brand-sage);letter-spacing:0.12em;margin-bottom:14px">06</p>
+        <h3 style="font-size:21px;color:#F5F2EB;margin-bottom:10px">One point of contact</h3>
+        <p style="font-size:14px;line-height:1.6;color:rgba(245,242,235,0.48)">From first consultation to handover, you work with the same Nua project lead throughout.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ── GALLERY ────────────────────────────────────────────── -->
+<section class="section" style="background:var(--bg-paper)">
+  <div class="wrap">
+    <div style="margin-bottom:48px">
+      <p class="eyebrow fade-up" style="margin-bottom:16px">Gallery</p>
+      <h2 class="fade-up" style="font-size:clamp(34px,4vw,48px);line-height:1.05;max-width:480px">Pods in the wild.</h2>
+    </div>
+    <div class="fade-up" style="display:grid;grid-template-columns:2fr 1fr 1fr;grid-template-rows:240px 240px 240px;gap:8px">
+      <div class="img-wrap" style="grid-row:span 2;border-radius:4px;overflow:hidden">
+        <img src="brand_assets/nua-pod-k50s-beach_v3.jpg"
+             alt="Nua pod on the Irish coast" class="card-img" style="width:100%;height:100%;object-fit:cover" />
+      </div>
+      <div class="img-wrap" style="border-radius:4px;overflow:hidden">
+        <img src="brand_assets/Nua Focus - Garden .jpg"
+             alt="Nua Focus pod in a garden setting" class="card-img" style="width:100%;height:100%;object-fit:cover" />
+      </div>
+      <div class="img-wrap" style="border-radius:4px;overflow:hidden">
+        <img src="brand_assets/nua-pod-garden-night.jpg"
+             alt="Nua pod illuminated at night" class="card-img" style="width:100%;height:100%;object-fit:cover" />
+      </div>
+      <div class="img-wrap" style="border-radius:4px;overflow:hidden">
+        <img src="brand_assets/nua-pod-k50s-lake_v2.jpg"
+             alt="Nua pod by a lake" class="card-img" style="width:100%;height:100%;object-fit:cover" />
+      </div>
+      <div class="img-wrap" style="border-radius:4px;overflow:hidden">
+        <img src="brand_assets/nua-pod-garden-office.jpg"
+             alt="Nua Focus pod as a garden office" class="card-img" style="width:100%;height:100%;object-fit:cover" />
+      </div>
+      <div class="img-wrap" style="grid-column:span 2;border-radius:4px;overflow:hidden">
+        <img src="brand_assets/nua-pod-garden-golden.jpg"
+             alt="Nua pod in garden at golden hour" class="card-img" style="width:100%;height:100%;object-fit:cover" />
+      </div>
+      <div class="img-wrap" style="border-radius:4px;overflow:hidden">
+        <img src="brand_assets/nua-pod-seaside_v2.jpg"
+             alt="Nua pod by the seaside" class="card-img" style="width:100%;height:100%;object-fit:cover" />
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ── HOW IT WORKS ───────────────────────────────────────── -->
+<section id="how-it-works" class="section" style="background:var(--bg-cream)">
+  <div class="wrap">
+    <div style="margin-bottom:64px">
+      <p class="eyebrow fade-up" style="margin-bottom:16px">How It Works</p>
+      <h2 class="fade-up" style="font-size:clamp(34px,4vw,48px);line-height:1.05;max-width:520px">
+        From enquiry<br />to move-in day.
+      </h2>
+    </div>
+    <div class="grid-4">
+      <div class="fade-up" style="padding:32px 24px;border:1px solid var(--rule);border-radius:4px">
+        <p style="font-family:'Fraunces',serif;font-size:38px;font-weight:300;color:var(--rule);line-height:1;margin-bottom:20px">01</p>
+        <h3 style="font-size:21px;margin-bottom:12px">Consultation</h3>
+        <p style="font-size:14px;line-height:1.65;color:var(--text-mute)">We meet in person, on site or over video. Walk through the range, discuss your site and budget. No obligation.</p>
+      </div>
+      <div class="fade-up" style="padding:32px 24px;border:1px solid var(--rule);border-radius:4px">
+        <p style="font-family:'Fraunces',serif;font-size:38px;font-weight:300;color:var(--rule);line-height:1;margin-bottom:20px">02</p>
+        <h3 style="font-size:21px;margin-bottom:12px">Design &amp; Planning</h3>
+        <p style="font-size:14px;line-height:1.65;color:var(--text-mute)">You see floor plans and visualisations before production begins. We handle planning permission where required.</p>
+      </div>
+      <div class="fade-up" style="padding:32px 24px;border:1px solid var(--rule);border-radius:4px">
+        <p style="font-family:'Fraunces',serif;font-size:38px;font-weight:300;color:var(--rule);line-height:1;margin-bottom:20px">03</p>
+        <h3 style="font-size:21px;margin-bottom:12px">Production</h3>
+        <p style="font-size:14px;line-height:1.65;color:var(--text-mute)">Your pod is produced in a controlled factory environment. Rigorous quality checks at every stage before delivery.</p>
+      </div>
+      <div class="fade-up" style="padding:32px 24px;border:1px solid var(--rule);border-radius:4px">
+        <p style="font-family:'Fraunces',serif;font-size:38px;font-weight:300;color:var(--rule);line-height:1;margin-bottom:20px">04</p>
+        <h3 style="font-size:21px;margin-bottom:12px">Installation</h3>
+        <p style="font-size:14px;line-height:1.65;color:var(--text-mute)">We organise transport and lift the pod into position in a single day. From the moment the crane leaves, the space is yours.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ── CONTACT / CTA ──────────────────────────────────────── -->
+<section id="contact" style="position:relative;padding:96px 24px;overflow:hidden">
+  <img src="brand_assets/nua-pod-cliff-golden (1).jpg"
+       alt="" role="presentation"
+       style="position:absolute;inset:0;width:100%;height:100%;object-fit:cover;object-position:center" />
+  <div style="position:absolute;inset:0;background:linear-gradient(to bottom,rgba(14,26,18,0.75),rgba(14,26,18,0.88))"></div>
+  <div class="wrap contact-grid" style="position:relative;display:grid;grid-template-columns:1fr 1fr;gap:80px;align-items:start">
+    <div>
+      <p class="eyebrow fade-up" style="margin-bottom:20px;color:rgba(74,139,92,0.85)">Get in Touch</p>
+      <h2 class="fade-up" style="font-size:clamp(34px,4vw,48px);line-height:1.05;color:#F5F2EB;margin-bottom:20px">
+        Ready to start<br />your project?
+      </h2>
+      <p class="fade-up" style="font-size:16px;line-height:1.65;color:rgba(245,242,235,0.65);margin-bottom:32px">
+        Get a free, no-obligation quote. We cover all of Ireland.
+      </p>
+      <div class="fade-up" style="display:flex;flex-direction:column;gap:14px">
+        <div style="display:flex;align-items:center;gap:12px">
+          <svg width="16" height="16" viewBox="0 0 16 16" fill="none" style="color:var(--brand-sage);flex-shrink:0">
+            <path d="M8 1a5 5 0 0 1 5 5c0 3.5-5 9-5 9S3 9.5 3 6a5 5 0 0 1 5-5z" stroke="currentColor" stroke-width="1.5"/>
+            <circle cx="8" cy="6" r="1.5" fill="currentColor"/>
+          </svg>
+          <p style="font-size:14px;color:rgba(245,242,235,0.6)">Serving all of Ireland</p>
+        </div>
+        <div style="display:flex;align-items:center;gap:12px">
+          <svg width="16" height="16" viewBox="0 0 16 16" fill="none" style="color:var(--brand-sage);flex-shrink:0">
+            <rect x="1.5" y="3" width="13" height="10" rx="1" stroke="currentColor" stroke-width="1.5"/>
+            <path d="M1.5 5.5l6.5 4 6.5-4" stroke="currentColor" stroke-width="1.5"/>
+          </svg>
+          <p style="font-size:14px;color:rgba(245,242,235,0.6)">nuamodular@gmail.com</p>
+        </div>
+      </div>
+    </div>
+
+    <form class="fade-up" style="background:var(--bg-paper);border-radius:4px;padding:40px" onsubmit="return false">
+      <h3 style="font-size:23px;margin-bottom:28px">Book a free consultation</h3>
+      <div style="display:flex;flex-direction:column;gap:16px">
+        <div>
+          <label style="display:block;font-size:13px;font-weight:500;color:var(--text-ink);margin-bottom:6px">Name</label>
+          <input type="text" placeholder="Your name"
+            style="width:100%;padding:11px 14px;background:var(--bg-paper);border:1px solid var(--rule);border-radius:6px;font-family:'Inter',sans-serif;font-size:15px;color:var(--text-ink);outline:none"
+            onfocus="this.style.borderColor='#1E5132'" onblur="this.style.borderColor='rgba(30,81,50,0.18)'" />
+        </div>
+        <div>
+          <label style="display:block;font-size:13px;font-weight:500;color:var(--text-ink);margin-bottom:6px">Email</label>
+          <input type="email" placeholder="your@email.com"
+            style="width:100%;padding:11px 14px;background:var(--bg-paper);border:1px solid var(--rule);border-radius:6px;font-family:'Inter',sans-serif;font-size:15px;color:var(--text-ink);outline:none"
+            onfocus="this.style.borderColor='#1E5132'" onblur="this.style.borderColor='rgba(30,81,50,0.18)'" />
+        </div>
+        <div>
+          <label style="display:block;font-size:13px;font-weight:500;color:var(--text-ink);margin-bottom:6px">Model of interest</label>
+          <div style="position:relative">
+            <select style="width:100%;padding:11px 14px;background:var(--bg-paper);border:1px solid var(--rule);border-radius:6px;font-family:'Inter',sans-serif;font-size:15px;color:var(--text-ink);outline:none;appearance:none"
+              onfocus="this.style.borderColor='#1E5132'" onblur="this.style.borderColor='rgba(30,81,50,0.18)'">
+              <option value="">Select a model…</option>
+              <option>Nua Focus</option>
+              <option>Nua Nest</option>
+              <option>Nua Ultra</option>
+              <option>Not sure yet</option>
+            </select>
+            <svg width="12" height="7" viewBox="0 0 12 7" fill="none" style="position:absolute;right:14px;top:50%;transform:translateY(-50%);pointer-events:none;color:var(--text-mute)">
+              <path d="M1 1l5 5 5-5" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/>
+            </svg>
+          </div>
+        </div>
+        <div>
+          <label style="display:block;font-size:13px;font-weight:500;color:var(--text-ink);margin-bottom:6px">
+            Message <span style="color:var(--text-mute);font-weight:400">(optional)</span>
+          </label>
+          <textarea rows="3" placeholder="Tell us about your site or project…"
+            style="width:100%;padding:11px 14px;background:var(--bg-paper);border:1px solid var(--rule);border-radius:6px;font-family:'Inter',sans-serif;font-size:15px;color:var(--text-ink);outline:none;resize:none"
+            onfocus="this.style.borderColor='#1E5132'" onblur="this.style.borderColor='rgba(30,81,50,0.18)'"></textarea>
+        </div>
+        <button type="submit" class="btn btn-primary" style="width:100%;margin-top:4px">Send Enquiry</button>
+      </div>
+    </form>
+  </div>
+</section>
+
+<!-- ── FOOTER ─────────────────────────────────────────────── -->
+<footer style="background:var(--brand-deep);padding:64px 24px 32px">
+  <div class="wrap">
+    <div class="grid-footer" style="margin-bottom:48px;padding-bottom:48px;border-bottom:1px solid rgba(74,139,92,0.18)">
+      <div>
+        <img src="brand_assets/Logo - Background Removed.png"
+             alt="Nua Modular" style="height:40px;width:auto;margin-bottom:20px;filter:brightness(0) invert(1);opacity:0.8" />
+        <p style="font-size:14px;line-height:1.65;color:rgba(245,242,235,0.4);max-width:260px">
+          Modular pods delivered and installed for Irish homes, gardens and sites.
+        </p>
+      </div>
+      <div>
+        <p class="eyebrow" style="color:rgba(74,139,92,0.75);margin-bottom:20px">Models</p>
+        <ul style="list-style:none;display:flex;flex-direction:column;gap:10px">
+          <li><a href="#models" style="font-size:14px;color:rgba(245,242,235,0.45);text-decoration:none;transition:color 0.2s" onmouseover="this.style.color='rgba(245,242,235,0.85)'" onmouseout="this.style.color='rgba(245,242,235,0.45)'">Nua Focus</a></li>
+          <li><a href="#models" style="font-size:14px;color:rgba(245,242,235,0.45);text-decoration:none;transition:color 0.2s" onmouseover="this.style.color='rgba(245,242,235,0.85)'" onmouseout="this.style.color='rgba(245,242,235,0.45)'">Nua Nest</a></li>
+          <li><a href="#models" style="font-size:14px;color:rgba(245,242,235,0.45);text-decoration:none;transition:color 0.2s" onmouseover="this.style.color='rgba(245,242,235,0.85)'" onmouseout="this.style.color='rgba(245,242,235,0.45)'">Nua Ultra</a></li>
+        </ul>
+      </div>
+      <div>
+        <p class="eyebrow" style="color:rgba(74,139,92,0.75);margin-bottom:20px">Company</p>
+        <ul style="list-style:none;display:flex;flex-direction:column;gap:10px">
+          <li><a href="#about" style="font-size:14px;color:rgba(245,242,235,0.45);text-decoration:none;transition:color 0.2s" onmouseover="this.style.color='rgba(245,242,235,0.85)'" onmouseout="this.style.color='rgba(245,242,235,0.45)'">About</a></li>
+          <li><a href="#how-it-works" style="font-size:14px;color:rgba(245,242,235,0.45);text-decoration:none;transition:color 0.2s" onmouseover="this.style.color='rgba(245,242,235,0.85)'" onmouseout="this.style.color='rgba(245,242,235,0.45)'">How It Works</a></li>
+          <li><a href="#contact" style="font-size:14px;color:rgba(245,242,235,0.45);text-decoration:none;transition:color 0.2s" onmouseover="this.style.color='rgba(245,242,235,0.85)'" onmouseout="this.style.color='rgba(245,242,235,0.45)'">Contact</a></li>
+        </ul>
+      </div>
+    </div>
+    <div style="display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:12px">
+      <p style="font-size:12px;color:rgba(245,242,235,0.22)">© 2026 Nua Modular Ltd. All rights reserved. Registered in Ireland.</p>
+      <p style="font-size:12px;color:rgba(245,242,235,0.22)">nuamodular.ie</p>
+    </div>
+  </div>
+</footer>
+
+<script>
+  const nav = document.getElementById('nav');
+  window.addEventListener('scroll', () => {
+    nav.classList.toggle('scrolled', window.scrollY > 40);
+  }, { passive: true });
+
+  document.getElementById('menu-btn').addEventListener('click', () => {
+    document.getElementById('mobile-menu').classList.add('open');
+  });
+  document.getElementById('menu-close').addEventListener('click', () => {
+    document.getElementById('mobile-menu').classList.remove('open');
+  });
+  document.querySelectorAll('.mobile-nav-link').forEach(l => {
+    l.addEventListener('click', () => document.getElementById('mobile-menu').classList.remove('open'));
+  });
+
+  const observer = new IntersectionObserver(entries => {
+    entries.forEach(e => { if (e.isIntersecting) { e.target.classList.add('in'); observer.unobserve(e.target); } });
+  }, { threshold: 0.08, rootMargin: '0px 0px -40px 0px' });
+  document.querySelectorAll('.fade-up').forEach(el => observer.observe(el));
+
+  // Stagger children inside differentiators and steps
+  document.querySelectorAll('.differentiators .fade-up, .grid-4 .fade-up').forEach((el, i) => {
+    el.style.transitionDelay = (i % 3) * 80 + 'ms';
+  });
+</script>
+</body>
+</html>
