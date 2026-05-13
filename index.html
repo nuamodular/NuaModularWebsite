@@ -148,7 +148,8 @@
       #menu-btn { display: none; }
     }
     @media (max-width: 900px) {
-      .stats-grid { grid-template-columns: 1fr 1fr !important; }
+      .stats-grid { grid-template-columns: 1fr 1fr !important; gap: 1px !important; background: rgba(74,139,92,0.25); }
+      .stats-grid > div { padding: 28px 16px !important; border-right: none !important; background: var(--brand); }
       .differentiators { grid-template-columns: 1fr 1fr !important; }
       .gallery-grid { grid-template-columns: 1fr 1fr !important; grid-template-rows: auto !important; }
       .gallery-grid > div { grid-row: auto !important; grid-column: auto !important; height: 220px !important; }
