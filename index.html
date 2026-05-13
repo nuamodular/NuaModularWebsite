@@ -21,7 +21,8 @@
       --rule:       rgba(30,81,50,0.18);
     }
     *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
-    html { scroll-behavior: smooth; }
+    html { scroll-behavior: smooth; overflow-x: hidden; }
+    body { overflow-x: hidden; }
     body {
       background: var(--bg-paper);
       color: var(--text-ink);
@@ -49,7 +50,7 @@
     .nav-inner {
       max-width: 1180px; margin: 0 auto;
       display: flex; align-items: center; justify-content: space-between;
-      height: 64px; padding: 0 24px;
+      height: 88px; padding: 0 24px;
     }
     .nav-links { display: flex; align-items: center; gap: 32px; }
     .nav-link {
@@ -146,22 +147,28 @@
     @media (min-width: 901px) {
       #menu-btn { display: none; }
     }
+    @media (max-width: 900px) {
+      .stats-grid { grid-template-columns: 1fr 1fr !important; }
+      .differentiators { grid-template-columns: 1fr 1fr !important; }
+      .gallery-grid { grid-template-columns: 1fr 1fr !important; grid-template-rows: auto !important; }
+      .gallery-grid > div { grid-row: auto !important; grid-column: auto !important; height: 220px !important; }
+      .use-cases-grid { grid-template-columns: 1fr !important; }
+      .use-cases-grid > div { grid-column: auto !important; }
+    }
     @media (max-width: 600px) {
       .section { padding: 56px 16px; }
       .grid-4 { grid-template-columns: 1fr; }
       .grid-footer { grid-template-columns: 1fr; }
       .hero-btns { flex-direction: column; align-items: flex-start; }
       .contact-grid { grid-template-columns: 1fr !important; }
+      .stats-grid { grid-template-columns: 1fr 1fr !important; }
+      .differentiators { grid-template-columns: 1fr !important; }
+      .gallery-grid { grid-template-columns: 1fr !important; }
+      .gallery-grid > div { height: 200px !important; }
     }
   </style>
   <script defer src="/_vercel/insights/script.js"></script>
-  <script async src="https://www.googletagmanager.com/gtag/js?id=G-16TED014ZD"></script>
-  <script>
-    window.dataLayer = window.dataLayer || [];
-    function gtag(){dataLayer.push(arguments);}
-    gtag('js', new Date());
-    gtag('config', 'G-16TED014ZD');
-  </script>
+
 </head>
 <body>
 
@@ -170,7 +177,7 @@
   <div class="nav-inner">
     <a href="/" aria-label="Nua Modular home">
       <img src="brand_assets/Logo - Background Removed.png"
-           alt="Nua Modular" style="height:40px;width:auto" />
+           alt="Nua Modular" style="height:80px;width:auto" />
     </a>
     <div class="nav-links">
       <a href="#models" class="nav-link">Models</a>
@@ -190,8 +197,8 @@
 
 <!-- ── MOBILE MENU ────────────────────────────────────────── -->
 <div id="mobile-menu">
-  <div style="display:flex;align-items:center;justify-content:space-between;height:64px;padding:0 24px;border-bottom:1px solid var(--rule)">
-    <img src="brand_assets/Logo - Background Removed.png" alt="Nua Modular" style="height:40px;width:auto" />
+  <div style="display:flex;align-items:center;justify-content:space-between;height:88px;padding:0 24px;border-bottom:1px solid var(--rule)">
+    <img src="brand_assets/Logo - Background Removed.png" alt="Nua Modular" style="height:80px;width:auto" />
     <button id="menu-close" aria-label="Close menu" style="background:none;border:none;cursor:pointer;padding:4px">
       <svg width="20" height="20" viewBox="0 0 20 20" fill="none">
         <line x1="2" y1="2" x2="18" y2="18" stroke="currentColor" stroke-width="1.5"/>
@@ -231,7 +238,7 @@
 <!-- ── STATS BAR ──────────────────────────────────────────── -->
 <section style="background:var(--brand);padding:48px 24px">
   <div class="wrap">
-    <div style="display:grid;grid-template-columns:repeat(4,1fr);gap:0">
+    <div class="stats-grid" style="display:grid;grid-template-columns:repeat(4,1fr);gap:0">
       <div style="text-align:center;padding:0 24px;border-right:1px solid rgba(74,139,92,0.25)">
         <p style="font-family:'Fraunces',serif;font-size:42px;font-weight:400;color:#F5F2EB;line-height:1;margin-bottom:6px">3<span style="color:var(--brand-sage)">+</span></p>
         <p class="eyebrow" style="color:rgba(245,242,235,0.45)">Models</p>
@@ -245,7 +252,7 @@
         <p class="eyebrow" style="color:rgba(245,242,235,0.45)">BER Energy Rating</p>
       </div>
       <div style="text-align:center;padding:0 24px">
-        <p style="font-family:'Fraunces',serif;font-size:42px;font-weight:400;color:#F5F2EB;line-height:1;margin-bottom:6px">50<span style="color:var(--brand-sage);font-size:28px"> yr</span></p>
+        <p style="font-family:'Fraunces',serif;font-size:42px;font-weight:400;color:#F5F2EB;line-height:1;margin-bottom:6px">30<span style="color:var(--brand-sage);font-size:28px"> yr</span></p>
         <p class="eyebrow" style="color:rgba(245,242,235,0.45)">Structural Warranty</p>
       </div>
     </div>
@@ -380,7 +387,7 @@
         Each unit is self-contained, fully serviced and quick to install. Our customers find new uses for them all the time.
       </p>
     </div>
-    <div class="fade-up" style="display:grid;grid-template-columns:1fr 1fr;gap:1px;background:var(--rule)">
+    <div class="fade-up use-cases-grid" style="display:grid;grid-template-columns:1fr 1fr;gap:1px;background:var(--rule)">
 
       <div style="background:var(--bg-cream);padding:28px 24px">
         <h3 style="font-size:19px;margin-bottom:8px">Home Office</h3>
@@ -391,7 +398,7 @@
         <p style="font-size:14px;line-height:1.6;color:var(--text-mute)">A comfortable, private space for visiting family and friends, without the cost of an extension.</p>
       </div>
       <div style="background:var(--bg-cream);padding:28px 24px">
-        <h3 style="font-size:19px;margin-bottom:8px">Granny Flat</h3>
+        <h3 style="font-size:19px;margin-bottom:8px">Multi-generational Living</h3>
         <p style="font-size:14px;line-height:1.6;color:var(--text-mute)">Multi-generational living with independence and privacy on both sides.</p>
       </div>
       <div style="background:var(--bg-cream);padding:28px 24px">
@@ -400,7 +407,7 @@
       </div>
       <div style="background:var(--bg-cream);padding:28px 24px;grid-column:span 2">
         <h3 style="font-size:19px;margin-bottom:8px">Studios &amp; Creative Spaces</h3>
-        <p style="font-size:14px;line-height:1.6;color:var(--text-mute)">Naturally lit pods for artists, musicians, yoga teachers and content creators.</p>
+        <p style="font-size:14px;line-height:1.6;color:var(--text-mute)">Naturally lit pods for artists, musicians and content creators.</p>
       </div>
 
     </div>
@@ -458,7 +465,7 @@
       <p class="eyebrow fade-up" style="margin-bottom:16px">Gallery</p>
       <h2 class="fade-up" style="font-size:clamp(34px,4vw,48px);line-height:1.05;max-width:480px">Pods in the wild.</h2>
     </div>
-    <div class="fade-up" style="display:grid;grid-template-columns:2fr 1fr 1fr;grid-template-rows:240px 240px 240px;gap:8px">
+    <div class="fade-up gallery-grid" style="display:grid;grid-template-columns:2fr 1fr 1fr;grid-template-rows:240px 240px 240px;gap:8px">
       <div class="img-wrap" style="grid-row:span 2;border-radius:4px;overflow:hidden">
         <img src="brand_assets/nua-pod-k50s-beach_v3.jpg"
              alt="Nua pod on the Irish coast" class="card-img" style="width:100%;height:100%;object-fit:cover" />
@@ -543,40 +550,39 @@
       <div class="fade-up" style="display:flex;flex-direction:column;gap:14px">
         <div style="display:flex;align-items:center;gap:12px">
           <svg width="16" height="16" viewBox="0 0 16 16" fill="none" style="color:var(--brand-sage);flex-shrink:0">
-            <path d="M8 1a5 5 0 0 1 5 5c0 3.5-5 9-5 9S3 9.5 3 6a5 5 0 0 1 5-5z" stroke="currentColor" stroke-width="1.5"/>
-            <circle cx="8" cy="6" r="1.5" fill="currentColor"/>
+            <path d="M13 10.5c-.8-.8-2.2-.8-3 0l-.7.7c-1.4-.8-2.7-2.1-3.5-3.5l.7-.7c.8-.8.8-2.2 0-3L5.2 2.7c-.8-.8-2.2-.8-3 0L1.5 3.4C.7 4.2.4 5.3.8 6.4c1 2.6 2.9 4.9 5.3 6.6 1.1.8 2.4 1 3.7.6l.8-.3c1.1-.4 1.8-1.5 1.8-2.7 0-.4-.2-.8-.4-1.1z" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/>
           </svg>
-          <p style="font-size:14px;color:rgba(245,242,235,0.6)">Serving all of Ireland</p>
+          <p style="font-size:14px;color:rgba(245,242,235,0.6)">087 440 9424</p>
         </div>
         <div style="display:flex;align-items:center;gap:12px">
           <svg width="16" height="16" viewBox="0 0 16 16" fill="none" style="color:var(--brand-sage);flex-shrink:0">
             <rect x="1.5" y="3" width="13" height="10" rx="1" stroke="currentColor" stroke-width="1.5"/>
             <path d="M1.5 5.5l6.5 4 6.5-4" stroke="currentColor" stroke-width="1.5"/>
           </svg>
-          <p style="font-size:14px;color:rgba(245,242,235,0.6)">nuamodular@gmail.com</p>
+          <p style="font-size:14px;color:rgba(245,242,235,0.6)">contact@nuamodular.com</p>
         </div>
       </div>
     </div>
 
-    <form class="fade-up" style="background:var(--bg-paper);border-radius:4px;padding:40px" onsubmit="return false">
+    <form class="fade-up" style="background:var(--bg-paper);border-radius:4px;padding:40px" action="https://formspree.io/f/xpqbnkbj" method="POST">
       <h3 style="font-size:23px;margin-bottom:28px">Book a free consultation</h3>
       <div style="display:flex;flex-direction:column;gap:16px">
         <div>
           <label style="display:block;font-size:13px;font-weight:500;color:var(--text-ink);margin-bottom:6px">Name</label>
-          <input type="text" placeholder="Your name"
+          <input type="text" name="name" placeholder="Your name"
             style="width:100%;padding:11px 14px;background:var(--bg-paper);border:1px solid var(--rule);border-radius:6px;font-family:'Inter',sans-serif;font-size:15px;color:var(--text-ink);outline:none"
             onfocus="this.style.borderColor='#1E5132'" onblur="this.style.borderColor='rgba(30,81,50,0.18)'" />
         </div>
         <div>
           <label style="display:block;font-size:13px;font-weight:500;color:var(--text-ink);margin-bottom:6px">Email</label>
-          <input type="email" placeholder="your@email.com"
+          <input type="email" name="email" placeholder="your@email.com"
             style="width:100%;padding:11px 14px;background:var(--bg-paper);border:1px solid var(--rule);border-radius:6px;font-family:'Inter',sans-serif;font-size:15px;color:var(--text-ink);outline:none"
             onfocus="this.style.borderColor='#1E5132'" onblur="this.style.borderColor='rgba(30,81,50,0.18)'" />
         </div>
         <div>
           <label style="display:block;font-size:13px;font-weight:500;color:var(--text-ink);margin-bottom:6px">Model of interest</label>
           <div style="position:relative">
-            <select style="width:100%;padding:11px 14px;background:var(--bg-paper);border:1px solid var(--rule);border-radius:6px;font-family:'Inter',sans-serif;font-size:15px;color:var(--text-ink);outline:none;appearance:none"
+            <select name="model" style="width:100%;padding:11px 14px;background:var(--bg-paper);border:1px solid var(--rule);border-radius:6px;font-family:'Inter',sans-serif;font-size:15px;color:var(--text-ink);outline:none;appearance:none"
               onfocus="this.style.borderColor='#1E5132'" onblur="this.style.borderColor='rgba(30,81,50,0.18)'">
               <option value="">Select a model…</option>
               <option>Nua Focus</option>
@@ -593,7 +599,7 @@
           <label style="display:block;font-size:13px;font-weight:500;color:var(--text-ink);margin-bottom:6px">
             Message <span style="color:var(--text-mute);font-weight:400">(optional)</span>
           </label>
-          <textarea rows="3" placeholder="Tell us about your site or project…"
+          <textarea rows="3" name="message" placeholder="Tell us about your site or project…"
             style="width:100%;padding:11px 14px;background:var(--bg-paper);border:1px solid var(--rule);border-radius:6px;font-family:'Inter',sans-serif;font-size:15px;color:var(--text-ink);outline:none;resize:none"
             onfocus="this.style.borderColor='#1E5132'" onblur="this.style.borderColor='rgba(30,81,50,0.18)'"></textarea>
         </div>
