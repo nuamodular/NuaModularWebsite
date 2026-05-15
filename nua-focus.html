@@ -1,0 +1,385 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Nua Focus — Specification | Nua Modular</title>
+  <link rel="icon" type="image/png" href="brand_assets/nua-logo-lockup-on-green.png" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,300;0,9..144,400;0,9..144,500;1,9..144,400&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet" />
+  <script src="https://cdn.tailwindcss.com"></script>
+  <style>
+    :root {
+      --brand:      #1E5132;
+      --brand-deep: #143421;
+      --brand-mid:  #2A6B45;
+      --brand-sage: #4A8B5C;
+      --bg-paper:   #FBFAF6;
+      --bg-cream:   #F5F2EB;
+      --text-ink:   #0E1A12;
+      --text-mute:  #7A857E;
+      --rule:       rgba(30,81,50,0.18);
+    }
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    html { scroll-behavior: smooth; overflow-x: hidden; }
+    body { overflow-x: hidden; background: var(--bg-paper); color: var(--text-ink); font-family: 'Inter', sans-serif; font-size: 16px; line-height: 1.55; -webkit-font-smoothing: antialiased; }
+    h1, h2, h3, h4 { font-family: 'Fraunces', serif; text-wrap: pretty; letter-spacing: -0.02em; font-weight: 400; }
+    #nav { position: fixed; top: 0; left: 0; right: 0; z-index: 100; transition: background 0.3s, border-color 0.3s; }
+    #nav.scrolled { background: var(--bg-paper); border-bottom: 1px solid var(--rule); }
+    .nav-inner { max-width: 1180px; margin: 0 auto; display: flex; align-items: center; justify-content: space-between; height: 88px; padding: 0 24px; }
+    .nav-links { display: flex; align-items: center; gap: 32px; }
+    .nav-link { font-family: 'Inter', sans-serif; font-size: 13px; font-weight: 400; letter-spacing: 0.08em; text-transform: uppercase; color: var(--text-ink); opacity: 0.65; text-decoration: none; transition: opacity 0.2s; }
+    .nav-link:hover { opacity: 1; }
+    .eyebrow { font-family: 'Inter', sans-serif; font-size: 11px; font-weight: 600; letter-spacing: 0.22em; text-transform: uppercase; color: var(--brand-sage); }
+    .btn { display: inline-flex; align-items: center; justify-content: center; font-family: 'Inter', sans-serif; font-size: 13px; font-weight: 600; letter-spacing: 0.06em; text-transform: uppercase; padding: 13px 28px; border-radius: 999px; text-decoration: none; cursor: pointer; border: none; transition: background 0.2s, color 0.2s, border-color 0.2s; }
+    .btn:focus-visible { outline: 2px solid var(--brand-mid); outline-offset: 2px; }
+    .btn-primary { background: var(--brand); color: #fff; }
+    .btn-primary:hover { background: var(--brand-mid); }
+    .btn-secondary { background: transparent; color: var(--brand); border: 1.5px solid var(--brand); }
+    .btn-secondary:hover { border-color: var(--brand-mid); color: var(--brand-mid); }
+    .btn-light { background: #fff; color: var(--brand); }
+    .btn-light:hover { background: var(--bg-cream); }
+    .btn-ghost-light { background: transparent; color: rgba(245,242,235,0.85); border: 1.5px solid rgba(245,242,235,0.4); }
+    .btn-ghost-light:hover { border-color: rgba(245,242,235,0.7); color: #fff; }
+    .fade-up { opacity: 0; transform: translateY(20px); transition: opacity 0.55s ease, transform 0.55s ease; }
+    .fade-up.in { opacity: 1; transform: none; }
+    @media (prefers-reduced-motion: reduce) { .fade-up { opacity: 1; transform: none; transition: none; } }
+    #mobile-menu { display: none; position: fixed; inset: 0; z-index: 200; background: var(--bg-paper); flex-direction: column; }
+    #mobile-menu.open { display: flex; }
+    .mobile-nav-link { display: block; padding: 18px 0; border-bottom: 1px solid var(--rule); font-family: 'Inter', sans-serif; font-size: 14px; letter-spacing: 0.08em; text-transform: uppercase; color: var(--text-ink); text-decoration: none; }
+    .section { padding: 96px 24px; }
+    .wrap { max-width: 1180px; margin: 0 auto; }
+    .rule-line { border: none; border-top: 1px solid var(--rule); }
+    .spec-table { width: 100%; border-collapse: collapse; }
+    .spec-table tr { border-bottom: 1px solid var(--rule); }
+    .spec-table tr:last-child { border-bottom: none; }
+    .spec-table td { padding: 14px 0; font-size: 14px; vertical-align: top; line-height: 1.6; }
+    .spec-table td:first-child { width: 44%; color: var(--text-mute); padding-right: 24px; font-weight: 500; }
+    .spec-table td:last-child { color: var(--text-ink); }
+    .facts-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 1px; background: var(--rule); }
+    .fact-cell { background: var(--bg-paper); padding: 28px 24px; }
+    .spec-groups { display: grid; grid-template-columns: 1fr 1fr; gap: 48px; }
+    .feature-list { display: flex; flex-direction: column; gap: 16px; }
+    .feature-item { display: flex; gap: 16px; align-items: flex-start; }
+    .feature-dot { width: 6px; height: 6px; border-radius: 50%; background: var(--brand-sage); flex-shrink: 0; margin-top: 8px; }
+    .apps-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 1px; background: var(--rule); }
+    .hero-stats { display: flex; gap: 48px; flex-wrap: wrap; }
+    @media (max-width: 900px) {
+      .section { padding: 64px 20px; }
+      .facts-grid { grid-template-columns: 1fr 1fr; }
+      .spec-groups { grid-template-columns: 1fr; gap: 40px; }
+      .apps-grid { grid-template-columns: 1fr 1fr; }
+      .hero-stats { gap: 32px; }
+      .nav-links { display: none; }
+      #menu-btn { display: block; }
+    }
+    @media (min-width: 901px) { #menu-btn { display: none; } }
+    @media (max-width: 600px) {
+      .section { padding: 56px 16px; }
+      .facts-grid { grid-template-columns: 1fr; }
+      .hero-stats { flex-direction: column; gap: 20px; }
+      .hero-btns { flex-direction: column; align-items: flex-start; }
+      .apps-grid { grid-template-columns: 1fr; }
+    }
+  </style>
+</head>
+<body>
+
+<nav id="nav">
+  <div class="nav-inner">
+    <a href="/" aria-label="Nua Modular home">
+      <img src="brand_assets/nua-logo.png" alt="Nua Modular" style="height:80px;width:auto" />
+    </a>
+    <div class="nav-links">
+      <a href="/#models" class="nav-link">Models</a>
+      <a href="/#about" class="nav-link">About</a>
+      <a href="/#how-it-works" class="nav-link">How It Works</a>
+      <a href="/#contact" class="btn btn-primary" style="margin-left:8px">Get a Quote</a>
+    </div>
+    <button id="menu-btn" aria-label="Open menu" style="background:none;border:none;cursor:pointer;padding:4px">
+      <svg width="24" height="18" viewBox="0 0 24 18" fill="none">
+        <line x1="0" y1="1.5" x2="24" y2="1.5" stroke="currentColor" stroke-width="1.5"/>
+        <line x1="0" y1="9" x2="24" y2="9" stroke="currentColor" stroke-width="1.5"/>
+        <line x1="0" y1="16.5" x2="24" y2="16.5" stroke="currentColor" stroke-width="1.5"/>
+      </svg>
+    </button>
+  </div>
+</nav>
+
+<div id="mobile-menu">
+  <div style="display:flex;align-items:center;justify-content:space-between;height:88px;padding:0 24px;border-bottom:1px solid var(--rule)">
+    <img src="brand_assets/nua-logo.png" alt="Nua Modular" style="height:80px;width:auto" />
+    <button id="menu-close" aria-label="Close menu" style="background:none;border:none;cursor:pointer;padding:4px">
+      <svg width="20" height="20" viewBox="0 0 20 20" fill="none">
+        <line x1="2" y1="2" x2="18" y2="18" stroke="currentColor" stroke-width="1.5"/>
+        <line x1="18" y1="2" x2="2" y2="18" stroke="currentColor" stroke-width="1.5"/>
+      </svg>
+    </button>
+  </div>
+  <nav style="padding:24px">
+    <a href="/#models" class="mobile-nav-link">Models</a>
+    <a href="/#about" class="mobile-nav-link">About</a>
+    <a href="/#how-it-works" class="mobile-nav-link">How It Works</a>
+    <a href="/#contact" class="btn btn-primary" style="width:100%;margin-top:24px">Get a Quote</a>
+  </nav>
+</div>
+
+<!-- HERO -->
+<section style="position:relative;min-height:100vh;display:flex;align-items:flex-end;padding-bottom:80px">
+  <img src="brand_assets/nua-focus-meadow-hero.jpg" alt="Nua Focus garden studio pod"
+       style="position:absolute;inset:0;width:100%;height:100%;object-fit:cover;object-position:center" />
+  <div style="position:absolute;inset:0;background:linear-gradient(to top,rgba(14,26,18,0.9) 0%,rgba(14,26,18,0.35) 55%,rgba(14,26,18,0.08) 100%)"></div>
+  <div class="wrap" style="position:relative;width:100%;padding-left:24px;padding-right:24px">
+    <p class="eyebrow fade-up" style="color:rgba(245,242,235,0.55);margin-bottom:16px">Nua Modular Signature Series</p>
+    <h1 class="fade-up" style="font-size:clamp(52px,7.5vw,92px);line-height:0.95;color:#F5F2EB;margin-bottom:12px">Nua Focus</h1>
+    <p class="fade-up" style="font-size:18px;line-height:1.5;color:rgba(245,242,235,0.7);margin-bottom:40px;max-width:500px">
+      A considered architectural studio. Six square metres of quiet, self-contained space — finished to an exceptionally high standard.
+    </p>
+    <div class="hero-stats fade-up" style="margin-bottom:40px;padding-bottom:40px;border-bottom:1px solid rgba(245,242,235,0.12)">
+      <div>
+        <p style="font-family:'Fraunces',serif;font-size:38px;font-weight:400;color:#F5F2EB;line-height:1;margin-bottom:4px">6 <span style="font-size:22px;color:var(--brand-sage)">m²</span></p>
+        <p class="eyebrow" style="color:rgba(245,242,235,0.4)">Footprint</p>
+      </div>
+      <div>
+        <p style="font-family:'Fraunces',serif;font-size:22px;font-weight:400;color:#F5F2EB;line-height:1.2;margin-bottom:4px"><span style="color:var(--brand-sage)">CE · ISO · TÜV</span></p>
+        <p class="eyebrow" style="color:rgba(245,242,235,0.4)">Certified</p>
+      </div>
+      <div>
+        <p style="font-family:'Fraunces',serif;font-size:38px;font-weight:400;color:#F5F2EB;line-height:1;margin-bottom:4px">30 <span style="font-size:22px;color:var(--brand-sage)">yr</span></p>
+        <p class="eyebrow" style="color:rgba(245,242,235,0.4)">Structural Warranty</p>
+      </div>
+    </div>
+    <div class="hero-btns fade-up" style="display:flex;flex-wrap:wrap;gap:12px">
+      <a href="/#contact" class="btn btn-light">Request a Quote</a>
+      <a href="#specifications" class="btn btn-ghost-light">View Full Specifications</a>
+    </div>
+  </div>
+</section>
+
+<!-- DESIGN PHILOSOPHY + AT A GLANCE -->
+<section class="section" style="background:var(--bg-paper)">
+  <div class="wrap">
+    <div style="display:grid;grid-template-columns:1fr 2fr;gap:80px;align-items:start" class="overview-grid">
+      <div>
+        <p class="eyebrow fade-up" style="margin-bottom:16px">Design Philosophy</p>
+        <h2 class="fade-up" style="font-size:clamp(30px,3.5vw,42px);line-height:1.05;margin-bottom:20px">Small space,<br /><em>generous spirit.</em></h2>
+        <p class="fade-up" style="font-size:15px;line-height:1.75;color:rgba(14,26,18,0.62);margin-bottom:16px">
+          The Nua Focus is shaped around a single principle: that a small space, when properly considered, should feel generous. A continuous curved profile, full-height glazing and a panoramic balcony extend the interior outward, while a restrained palette of warm timber tones, brushed metals and soft ambient lighting establish a calm, residential atmosphere within.
+        </p>
+        <p class="fade-up" style="font-size:15px;line-height:1.75;color:rgba(14,26,18,0.62)">
+          The pod is engineered as a sealed architectural envelope — quiet, weather-tight and thermally stable for the Irish climate. It arrives complete: structure, services, fixtures, finishes and smart systems pre-installed, commissioned and ready for connection on site.
+        </p>
+      </div>
+      <div class="fade-up" style="border:1px solid var(--rule);border-radius:4px;overflow:hidden;background:var(--bg-paper);padding:0 32px">
+        <table class="spec-table">
+          <tr><td>Model</td><td style="font-family:'Fraunces',serif;font-size:15px">Nua Focus</td></tr>
+          <tr><td>Collection</td><td style="font-family:'Fraunces',serif;font-size:15px">Signature Series</td></tr>
+          <tr><td>Footprint</td><td style="font-family:'Fraunces',serif;font-size:15px">6 m² &nbsp;<span style="font-size:12px;color:var(--text-mute)">2.85 × 2.15 m</span></td></tr>
+          <tr><td>Overall height</td><td style="font-family:'Fraunces',serif;font-size:15px">2.30 m</td></tr>
+          <tr><td>Capacity</td><td style="font-family:'Fraunces',serif;font-size:15px">1 – 2 occupants</td></tr>
+          <tr><td>Unit weight</td><td style="font-family:'Fraunces',serif;font-size:15px">Approx. 1.5 t</td></tr>
+          <tr><td>Delivery</td><td style="font-family:'Fraunces',serif;font-size:15px">Single-lift &nbsp;<span style="font-size:12px;color:var(--text-mute)">Fully assembled</span></td></tr>
+          <tr><td>Certification</td><td style="font-family:'Fraunces',serif;font-size:15px">CE · ISO · TÜV</td></tr>
+          <tr><td>Warranty</td><td style="font-family:'Fraunces',serif;font-size:15px">30 years &nbsp;<span style="font-size:12px;color:var(--text-mute)">Frame &amp; panel system</span></td></tr>
+          <tr><td>Price</td><td style="font-family:'Fraunces',serif;font-size:15px">Price on request</td></tr>
+        </table>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- PRINCIPAL FEATURES -->
+<section class="section" style="background:var(--bg-cream)">
+  <div class="wrap">
+    <div style="display:grid;grid-template-columns:1fr 1fr;gap:64px;align-items:start" class="features-grid">
+      <div>
+        <p class="eyebrow fade-up" style="margin-bottom:16px">Principal Features</p>
+        <h2 class="fade-up" style="font-size:clamp(30px,3.5vw,42px);line-height:1.05;margin-bottom:32px">Engineered<br /><em>without compromise.</em></h2>
+        <div class="feature-list fade-up">
+          <div class="feature-item">
+            <div class="feature-dot"></div>
+            <p style="font-size:15px;line-height:1.7;color:rgba(14,26,18,0.7)">Precision-engineered structural shell with hot-dip galvanised steel chassis and aviation-grade aluminium cladding finished in matte fluorocarbon.</p>
+          </div>
+          <div class="feature-item">
+            <div class="feature-dot"></div>
+            <p style="font-size:15px;line-height:1.7;color:rgba(14,26,18,0.7)">Three-layer thermal envelope with high-density polyurethane insulation, achieving year-round comfort with minimal energy demand.</p>
+          </div>
+          <div class="feature-item">
+            <div class="feature-dot"></div>
+            <p style="font-size:15px;line-height:1.7;color:rgba(14,26,18,0.7)">Full-height double-glazed Low-E curtain wall with thermal-break framing — exceptional clarity, acoustic isolation and solar control.</p>
+          </div>
+          <div class="feature-item">
+            <div class="feature-dot"></div>
+            <p style="font-size:15px;line-height:1.7;color:rgba(14,26,18,0.7)">Integrated smart-home system with voice command and a centralised control panel governing lighting, climate, audio and motorised drapery.</p>
+          </div>
+          <div class="feature-item">
+            <div class="feature-dot"></div>
+            <p style="font-size:15px;line-height:1.7;color:rgba(14,26,18,0.7)">Optional underfloor heating, antifreeze package and illuminated starlit ceiling for cooler climates and immersive interiors.</p>
+          </div>
+        </div>
+      </div>
+      <div class="fade-up" style="background:var(--bg-paper);border:1px solid var(--rule);border-radius:4px;overflow:hidden">
+        <img src="brand_assets/nua-focus-irish-garden-golden.jpg" alt="Nua Focus pod in a garden setting"
+             style="width:100%;height:auto;display:block" />
+        <div style="padding:28px">
+          <p class="eyebrow" style="color:var(--brand-sage);margin-bottom:8px">Nua Modular Signature Series</p>
+          <p style="font-size:14px;line-height:1.65;color:var(--text-mute)">Every Nua Focus is finished to an extremely high quality standard — discreet, tactile and quietly luxurious, suited to garden studios and executive home offices.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- TECHNICAL SPECIFICATIONS -->
+<section id="specifications" class="section" style="background:var(--bg-paper)">
+  <div class="wrap">
+    <div style="margin-bottom:64px">
+      <p class="eyebrow fade-up" style="margin-bottom:16px">Technical Specifications</p>
+      <h2 class="fade-up" style="font-size:clamp(30px,3.5vw,42px);line-height:1.05;max-width:520px">The standard configuration,<br />in full detail.</h2>
+      <p class="fade-up" style="font-size:15px;line-height:1.7;color:rgba(14,26,18,0.55);max-width:560px;margin-top:16px">Every element pre-installed and commissioned before delivery. Ready to connect on site.</p>
+    </div>
+    <div class="spec-groups">
+      <div class="fade-up">
+        <h3 style="font-size:19px;margin-bottom:4px">Construction & Fabric</h3>
+        <hr class="rule-line" style="margin:16px 0 4px" />
+        <table class="spec-table">
+          <tr><td>Primary frame</td><td>Reinforced seismic-rated steel structure</td></tr>
+          <tr><td>External cladding</td><td>Fluorocarbon-coated aviation-grade aluminium panel</td></tr>
+          <tr><td>Roof system</td><td>Fluorocarbon-coated aluminium with sealed weather membrane</td></tr>
+          <tr><td>Insulation</td><td>50 mm high-density polyurethane board with closed-cell foam infill</td></tr>
+          <tr><td>Glazing</td><td>Double-tempered insulated Low-E glass with thermal-break frames</td></tr>
+          <tr><td>Floor build-up</td><td>Cement-fibre subfloor with engineered waterproof composite finish</td></tr>
+          <tr><td>Interior surfaces</td><td>Brushed aluminium ceiling and wall linings</td></tr>
+          <tr><td>Interior flooring</td><td>SPC stone-polymer composite (interior); WPC timber composite (balcony)</td></tr>
+          <tr><td>Entry</td><td>Weather-sealed door with integrated smart access control</td></tr>
+        </table>
+      </div>
+      <div class="fade-up">
+        <h3 style="font-size:19px;margin-bottom:4px">Systems & Technology</h3>
+        <hr class="rule-line" style="margin:16px 0 4px" />
+        <table class="spec-table">
+          <tr><td>Smart control</td><td>Whole-pod voice-activated system with central touch panel</td></tr>
+          <tr><td>Climate</td><td>Inverter-driven wall-mounted air conditioner with heating mode</td></tr>
+          <tr><td>Ventilation</td><td>Continuous fresh-air circulation system</td></tr>
+          <tr><td>Interior lighting</td><td>Recessed three-temperature LED downlights, warm 3000 K default</td></tr>
+          <tr><td>Exterior lighting</td><td>Concealed 4000 K LED perimeter strip beneath the balcony eave</td></tr>
+          <tr><td>Audio</td><td>Integrated in-ceiling sound system, voice-addressable</td></tr>
+          <tr><td>Window treatments</td><td>Motorised electric curtains, scene-linked</td></tr>
+          <tr><td>Power</td><td>Card-activated mains supply with master isolator and surge protection</td></tr>
+          <tr><td>Switchgear</td><td>European-specification fittings throughout</td></tr>
+          <tr><td>Optional</td><td>Electric underfloor heating · antifreeze pipework · illuminated starlit ceiling · road-tow chassis</td></tr>
+        </table>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- INTERIOR FINISHES -->
+<section class="section" style="background:var(--brand-deep)">
+  <div class="wrap">
+    <div style="display:grid;grid-template-columns:1fr 1fr;gap:64px;align-items:center" class="finishes-grid">
+      <div>
+        <p class="eyebrow fade-up" style="margin-bottom:16px;color:rgba(74,139,92,0.85)">Interior Finishes</p>
+        <h2 class="fade-up" style="font-size:clamp(30px,3.5vw,42px);line-height:1.05;color:#F5F2EB;margin-bottom:20px">A refined,<br /><em>considered palette.</em></h2>
+        <p class="fade-up" style="font-size:15px;line-height:1.75;color:rgba(245,242,235,0.5);margin-bottom:32px">The standard Nua Focus interior is finished to a refined, neutral palette. Bespoke configurations — from layout adjustments through to alternative finishes, joinery and furnishings — are developed in consultation with each client.</p>
+      </div>
+      <div class="fade-up" style="display:flex;flex-direction:column;gap:20px">
+        <div style="padding:24px;border:1px solid rgba(74,139,92,0.2);border-radius:4px">
+          <p style="font-size:13px;font-weight:600;color:var(--brand-sage);margin-bottom:6px;letter-spacing:0.06em;text-transform:uppercase">Ceiling & Walls</p>
+          <p style="font-size:14px;line-height:1.65;color:rgba(245,242,235,0.55)">Continuous brushed aluminium panelling for a seamless, light-reflective interior.</p>
+        </div>
+        <div style="padding:24px;border:1px solid rgba(74,139,92,0.2);border-radius:4px">
+          <p style="font-size:13px;font-weight:600;color:var(--brand-sage);margin-bottom:6px;letter-spacing:0.06em;text-transform:uppercase">Flooring</p>
+          <p style="font-size:14px;line-height:1.65;color:rgba(245,242,235,0.55)">SPC composite with stone-look surface inside; WPC timber-look composite to the balcony.</p>
+        </div>
+        <div style="padding:24px;border:1px solid rgba(74,139,92,0.2);border-radius:4px">
+          <p style="font-size:13px;font-weight:600;color:var(--brand-sage);margin-bottom:6px;letter-spacing:0.06em;text-transform:uppercase">Lighting</p>
+          <p style="font-size:14px;line-height:1.65;color:rgba(245,242,235,0.55)">Warm 3000 K interior scenes; cooler 4000 K exterior accent. Fully scene-linked and voice-controlled.</p>
+        </div>
+        <div style="padding:24px;border:1px solid rgba(74,139,92,0.2);border-radius:4px">
+          <p style="font-size:13px;font-weight:600;color:var(--brand-sage);margin-bottom:6px;letter-spacing:0.06em;text-transform:uppercase">Switchplates & Sockets</p>
+          <p style="font-size:14px;line-height:1.65;color:rgba(245,242,235,0.55)">European specification throughout.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- APPLICATIONS -->
+<section class="section" style="background:var(--bg-cream)">
+  <div class="wrap">
+    <div style="margin-bottom:48px">
+      <p class="eyebrow fade-up" style="margin-bottom:16px">Applications</p>
+      <h2 class="fade-up" style="font-size:clamp(30px,3.5vw,42px);line-height:1.05;max-width:480px">Compact, complete,<br /><em>ready for anything.</em></h2>
+    </div>
+    <div class="apps-grid fade-up" style="border:1px solid var(--rule);border-radius:4px;overflow:hidden">
+      <div style="padding:32px;background:var(--bg-paper)">
+        <h3 style="font-size:19px;margin-bottom:10px">Garden Studio</h3>
+        <p style="font-size:14px;line-height:1.65;color:var(--text-mute)">A permanent, beautifully resolved workspace separate from the main house. A place to think, create and focus — steps from the back door.</p>
+      </div>
+      <div style="padding:32px;background:var(--bg-paper);border-left:1px solid var(--rule)">
+        <h3 style="font-size:19px;margin-bottom:10px">Executive Home Office</h3>
+        <p style="font-size:14px;line-height:1.65;color:var(--text-mute)">A dedicated professional environment with the presence and finish of a city workspace, installed in your garden without planning disruption.</p>
+      </div>
+      <div style="padding:32px;background:var(--bg-paper);border-left:1px solid var(--rule)">
+        <h3 style="font-size:19px;margin-bottom:10px">Creative Retreat</h3>
+        <p style="font-size:14px;line-height:1.65;color:var(--text-mute)">A quiet, light-filled space for artists, musicians, writers and makers. Acoustically considered, thermally stable, architecturally resolved.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- BESPOKE + CTA -->
+<section class="section" style="background:var(--bg-paper)">
+  <div class="wrap" style="max-width:680px;text-align:center">
+    <p class="eyebrow fade-up" style="margin-bottom:20px">Bespoke Commissions</p>
+    <h2 class="fade-up" style="font-size:clamp(34px,4vw,52px);line-height:1.05;margin-bottom:20px">Built around<br /><em>your project.</em></h2>
+    <p class="fade-up" style="font-size:16px;line-height:1.75;color:rgba(14,26,18,0.6);margin-bottom:36px">Every element of the Nua Focus — from internal layout and glazing configuration to smart-system specification and exterior palette — can be tailored to your requirements. Our design team works directly with clients, architects and operators to develop pods that complement their site, brand and end-use.</p>
+    <div class="fade-up" style="display:flex;flex-wrap:wrap;justify-content:center;gap:12px;margin-bottom:28px">
+      <a href="/#contact" class="btn btn-primary">Request a Quote</a>
+      <a href="tel:+353874409424" class="btn btn-secondary">Call 087 440 9424</a>
+    </div>
+    <p class="fade-up" style="font-size:13px;color:var(--text-mute)">Or email <a href="mailto:contact@nuamodular.com" style="color:var(--brand);text-decoration:none">contact@nuamodular.com</a></p>
+  </div>
+</section>
+
+<footer style="background:var(--brand-deep);padding:48px 24px 32px">
+  <div class="wrap">
+    <div style="display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:20px;padding-bottom:32px;border-bottom:1px solid rgba(74,139,92,0.18);margin-bottom:28px">
+      <div>
+        <img src="brand_assets/nua-logo.png" alt="Nua Modular" style="height:48px;width:auto;filter:brightness(0) invert(1);opacity:0.75;margin-bottom:8px;display:block" />
+        <p style="font-size:12px;color:rgba(245,242,235,0.3);letter-spacing:0.12em;text-transform:uppercase">Live Better, Build Smarter</p>
+      </div>
+      <div style="display:flex;gap:32px;flex-wrap:wrap">
+        <a href="/" style="font-size:13px;color:rgba(245,242,235,0.4);text-decoration:none;letter-spacing:0.08em;text-transform:uppercase">Home</a>
+        <a href="/#models" style="font-size:13px;color:rgba(245,242,235,0.4);text-decoration:none;letter-spacing:0.08em;text-transform:uppercase">Models</a>
+        <a href="/#contact" style="font-size:13px;color:rgba(245,242,235,0.4);text-decoration:none;letter-spacing:0.08em;text-transform:uppercase">Contact</a>
+      </div>
+    </div>
+    <div style="display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:12px">
+      <p style="font-size:12px;color:rgba(245,242,235,0.22)">© 2026 Nua Modular Ltd. All rights reserved. Registered in Ireland.</p>
+      <p style="font-size:12px;color:rgba(245,242,235,0.22)">nuamodular.ie</p>
+    </div>
+  </div>
+</footer>
+
+<script>
+  const nav = document.getElementById('nav');
+  window.addEventListener('scroll', () => { nav.classList.toggle('scrolled', window.scrollY > 40); }, { passive: true });
+  document.getElementById('menu-btn').addEventListener('click', () => { document.getElementById('mobile-menu').classList.add('open'); });
+  document.getElementById('menu-close').addEventListener('click', () => { document.getElementById('mobile-menu').classList.remove('open'); });
+  document.querySelectorAll('.mobile-nav-link').forEach(l => { l.addEventListener('click', () => document.getElementById('mobile-menu').classList.remove('open')); });
+  const observer = new IntersectionObserver(entries => { entries.forEach(e => { if (e.isIntersecting) { e.target.classList.add('in'); observer.unobserve(e.target); } }); }, { threshold: 0.08, rootMargin: '0px 0px -40px 0px' });
+  document.querySelectorAll('.fade-up').forEach(el => observer.observe(el));
+  function handleGrids() {
+    const m = window.innerWidth <= 900;
+    document.querySelector('.overview-grid').style.cssText = m ? 'grid-template-columns:1fr;gap:40px' : 'grid-template-columns:1fr 2fr;gap:80px;align-items:start';
+    document.querySelector('.features-grid').style.cssText = m ? 'grid-template-columns:1fr;gap:40px' : 'grid-template-columns:1fr 1fr;gap:64px;align-items:start';
+    document.querySelector('.finishes-grid').style.cssText = m ? 'grid-template-columns:1fr;gap:40px' : 'grid-template-columns:1fr 1fr;gap:64px;align-items:center';
+  }
+  handleGrids();
+  window.addEventListener('resize', handleGrids);
+</script>
+</body>
+</html>

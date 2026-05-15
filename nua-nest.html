@@ -1,0 +1,362 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Nua Nest — Specification | Nua Modular</title>
+  <link rel="icon" type="image/png" href="brand_assets/nua-logo-lockup-on-green.png" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,300;0,9..144,400;0,9..144,500;1,9..144,400&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet" />
+  <script src="https://cdn.tailwindcss.com"></script>
+  <style>
+    :root { --brand:#1E5132;--brand-deep:#143421;--brand-mid:#2A6B45;--brand-sage:#4A8B5C;--bg-paper:#FBFAF6;--bg-cream:#F5F2EB;--text-ink:#0E1A12;--text-mute:#7A857E;--rule:rgba(30,81,50,0.18); }
+    *,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+    html{scroll-behavior:smooth;overflow-x:hidden}
+    body{overflow-x:hidden;background:var(--bg-paper);color:var(--text-ink);font-family:'Inter',sans-serif;font-size:16px;line-height:1.55;-webkit-font-smoothing:antialiased}
+    h1,h2,h3,h4{font-family:'Fraunces',serif;text-wrap:pretty;letter-spacing:-0.02em;font-weight:400}
+    #nav{position:fixed;top:0;left:0;right:0;z-index:100;transition:background 0.3s,border-color 0.3s}
+    #nav.scrolled{background:var(--bg-paper);border-bottom:1px solid var(--rule)}
+    .nav-inner{max-width:1180px;margin:0 auto;display:flex;align-items:center;justify-content:space-between;height:88px;padding:0 24px}
+    .nav-links{display:flex;align-items:center;gap:32px}
+    .nav-link{font-family:'Inter',sans-serif;font-size:13px;font-weight:400;letter-spacing:0.08em;text-transform:uppercase;color:var(--text-ink);opacity:.65;text-decoration:none;transition:opacity 0.2s}
+    .nav-link:hover{opacity:1}
+    .eyebrow{font-family:'Inter',sans-serif;font-size:11px;font-weight:600;letter-spacing:0.22em;text-transform:uppercase;color:var(--brand-sage)}
+    .btn{display:inline-flex;align-items:center;justify-content:center;font-family:'Inter',sans-serif;font-size:13px;font-weight:600;letter-spacing:0.06em;text-transform:uppercase;padding:13px 28px;border-radius:999px;text-decoration:none;cursor:pointer;border:none;transition:background 0.2s,color 0.2s,border-color 0.2s}
+    .btn:focus-visible{outline:2px solid var(--brand-mid);outline-offset:2px}
+    .btn-primary{background:var(--brand);color:#fff}.btn-primary:hover{background:var(--brand-mid)}
+    .btn-secondary{background:transparent;color:var(--brand);border:1.5px solid var(--brand)}.btn-secondary:hover{border-color:var(--brand-mid);color:var(--brand-mid)}
+    .btn-light{background:#fff;color:var(--brand)}.btn-light:hover{background:var(--bg-cream)}
+    .btn-ghost-light{background:transparent;color:rgba(245,242,235,.85);border:1.5px solid rgba(245,242,235,.4)}.btn-ghost-light:hover{border-color:rgba(245,242,235,.7);color:#fff}
+    .fade-up{opacity:0;transform:translateY(20px);transition:opacity 0.55s ease,transform 0.55s ease}
+    .fade-up.in{opacity:1;transform:none}
+    @media(prefers-reduced-motion:reduce){.fade-up{opacity:1;transform:none;transition:none}}
+    #mobile-menu{display:none;position:fixed;inset:0;z-index:200;background:var(--bg-paper);flex-direction:column}
+    #mobile-menu.open{display:flex}
+    .mobile-nav-link{display:block;padding:18px 0;border-bottom:1px solid var(--rule);font-family:'Inter',sans-serif;font-size:14px;letter-spacing:0.08em;text-transform:uppercase;color:var(--text-ink);text-decoration:none}
+    .section{padding:96px 24px}
+    .wrap{max-width:1180px;margin:0 auto}
+    .rule-line{border:none;border-top:1px solid var(--rule)}
+    .spec-table{width:100%;border-collapse:collapse}
+    .spec-table tr{border-bottom:1px solid var(--rule)}
+    .spec-table tr:last-child{border-bottom:none}
+    .spec-table td{padding:14px 0;font-size:14px;vertical-align:top;line-height:1.6}
+    .spec-table td:first-child{width:44%;color:var(--text-mute);padding-right:24px;font-weight:500}
+    .spec-table td:last-child{color:var(--text-ink)}
+    .facts-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:1px;background:var(--rule)}
+    .fact-cell{background:var(--bg-paper);padding:28px 24px}
+    .spec-groups{display:grid;grid-template-columns:1fr 1fr;gap:48px}
+    .feature-list{display:flex;flex-direction:column;gap:16px}
+    .feature-item{display:flex;gap:16px;align-items:flex-start}
+    .feature-dot{width:6px;height:6px;border-radius:50%;background:var(--brand-sage);flex-shrink:0;margin-top:8px}
+    .apps-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:1px;background:var(--rule)}
+    .hero-stats{display:flex;gap:48px;flex-wrap:wrap}
+    @media(max-width:900px){
+      .section{padding:64px 20px}
+      .facts-grid{grid-template-columns:1fr 1fr}
+      .spec-groups{grid-template-columns:1fr;gap:40px}
+      .apps-grid{grid-template-columns:1fr 1fr}
+      .hero-stats{gap:32px}
+      .nav-links{display:none}
+      #menu-btn{display:block}
+    }
+    @media(min-width:901px){#menu-btn{display:none}}
+    @media(max-width:600px){
+      .section{padding:56px 16px}
+      .facts-grid{grid-template-columns:1fr}
+      .hero-stats{flex-direction:column;gap:20px}
+      .hero-btns{flex-direction:column;align-items:flex-start}
+      .apps-grid{grid-template-columns:1fr}
+    }
+  </style>
+</head>
+<body>
+
+<nav id="nav">
+  <div class="nav-inner">
+    <a href="/" aria-label="Nua Modular home"><img src="brand_assets/nua-logo.png" alt="Nua Modular" style="height:80px;width:auto" /></a>
+    <div class="nav-links">
+      <a href="/#models" class="nav-link">Models</a>
+      <a href="/#about" class="nav-link">About</a>
+      <a href="/#how-it-works" class="nav-link">How It Works</a>
+      <a href="/#contact" class="btn btn-primary" style="margin-left:8px">Get a Quote</a>
+    </div>
+    <button id="menu-btn" aria-label="Open menu" style="background:none;border:none;cursor:pointer;padding:4px">
+      <svg width="24" height="18" viewBox="0 0 24 18" fill="none"><line x1="0" y1="1.5" x2="24" y2="1.5" stroke="currentColor" stroke-width="1.5"/><line x1="0" y1="9" x2="24" y2="9" stroke="currentColor" stroke-width="1.5"/><line x1="0" y1="16.5" x2="24" y2="16.5" stroke="currentColor" stroke-width="1.5"/></svg>
+    </button>
+  </div>
+</nav>
+
+<div id="mobile-menu">
+  <div style="display:flex;align-items:center;justify-content:space-between;height:88px;padding:0 24px;border-bottom:1px solid var(--rule)">
+    <img src="brand_assets/nua-logo.png" alt="Nua Modular" style="height:80px;width:auto" />
+    <button id="menu-close" aria-label="Close menu" style="background:none;border:none;cursor:pointer;padding:4px">
+      <svg width="20" height="20" viewBox="0 0 20 20" fill="none"><line x1="2" y1="2" x2="18" y2="18" stroke="currentColor" stroke-width="1.5"/><line x1="18" y1="2" x2="2" y2="18" stroke="currentColor" stroke-width="1.5"/></svg>
+    </button>
+  </div>
+  <nav style="padding:24px">
+    <a href="/#models" class="mobile-nav-link">Models</a>
+    <a href="/#about" class="mobile-nav-link">About</a>
+    <a href="/#how-it-works" class="mobile-nav-link">How It Works</a>
+    <a href="/#contact" class="btn btn-primary" style="width:100%;margin-top:24px">Get a Quote</a>
+  </nav>
+</div>
+
+<!-- HERO -->
+<section style="position:relative;min-height:100vh;display:flex;align-items:flex-end;padding-bottom:80px">
+  <img src="brand_assets/nua-nest-beach.jpg" alt="Nua Nest pod on the Irish coast"
+       style="position:absolute;inset:0;width:100%;height:100%;object-fit:cover;object-position:center" />
+  <div style="position:absolute;inset:0;background:linear-gradient(to top,rgba(14,26,18,0.9) 0%,rgba(14,26,18,0.35) 55%,rgba(14,26,18,0.08) 100%)"></div>
+  <div class="wrap" style="position:relative;width:100%;padding-left:24px;padding-right:24px">
+    <p class="eyebrow fade-up" style="color:rgba(245,242,235,0.55);margin-bottom:16px">Nua Modular Signature Series</p>
+    <h1 class="fade-up" style="font-size:clamp(52px,7.5vw,92px);line-height:0.95;color:#F5F2EB;margin-bottom:12px">Nua Nest</h1>
+    <p class="fade-up" style="font-size:18px;line-height:1.5;color:rgba(245,242,235,0.7);margin-bottom:40px;max-width:520px">
+      A complete open-plan home with panoramic glazing, a private balcony and a fully fitted bathroom. Delivered to your site, ready to live in.
+    </p>
+    <div class="hero-stats fade-up" style="margin-bottom:40px;padding-bottom:40px;border-bottom:1px solid rgba(245,242,235,0.12)">
+      <div>
+        <p style="font-family:'Fraunces',serif;font-size:38px;font-weight:400;color:#F5F2EB;line-height:1;margin-bottom:4px">25 <span style="font-size:22px;color:var(--brand-sage)">m²</span></p>
+        <p class="eyebrow" style="color:rgba(245,242,235,0.4)">Internal Area</p>
+      </div>
+      <div>
+        <p style="font-family:'Fraunces',serif;font-size:22px;font-weight:400;color:#F5F2EB;line-height:1.2;margin-bottom:4px"><span style="color:var(--brand-sage)">CE · ISO · TÜV</span></p>
+        <p class="eyebrow" style="color:rgba(245,242,235,0.4)">Certified</p>
+      </div>
+      <div>
+        <p style="font-family:'Fraunces',serif;font-size:38px;font-weight:400;color:#F5F2EB;line-height:1;margin-bottom:4px">30 <span style="font-size:22px;color:var(--brand-sage)">yr</span></p>
+        <p class="eyebrow" style="color:rgba(245,242,235,0.4)">Structural Warranty</p>
+      </div>
+    </div>
+    <div class="hero-btns fade-up" style="display:flex;flex-wrap:wrap;gap:12px">
+      <a href="/#contact" class="btn btn-light">Request a Quote</a>
+      <a href="#specifications" class="btn btn-ghost-light">View Full Specifications</a>
+    </div>
+  </div>
+</section>
+
+<!-- PHILOSOPHY + AT A GLANCE -->
+<section class="section" style="background:var(--bg-paper)">
+  <div class="wrap">
+    <div style="display:grid;grid-template-columns:1fr 2fr;gap:80px;align-items:start" class="overview-grid">
+      <div>
+        <p class="eyebrow fade-up" style="margin-bottom:16px">Design Philosophy</p>
+        <h2 class="fade-up" style="font-size:clamp(30px,3.5vw,42px);line-height:1.05;margin-bottom:20px">Open plan,<br /><em>generously resolved.</em></h2>
+        <p class="fade-up" style="font-size:15px;line-height:1.75;color:rgba(14,26,18,0.62);margin-bottom:16px">The Nua Nest is shaped around a single principle: that a small space, when properly considered, should feel generous. A long, open-plan volume with full-height panoramic glazing along its length draws the landscape inward, while a restrained palette of warm tones, brushed metals and soft ambient lighting establish a calm, residential atmosphere within.</p>
+        <p class="fade-up" style="font-size:15px;line-height:1.75;color:rgba(14,26,18,0.62)">The pod arrives complete — structure, services, fixtures, finishes and smart systems pre-installed, commissioned and ready for connection on site.</p>
+      </div>
+      <div class="fade-up" style="border:1px solid var(--rule);border-radius:4px;overflow:hidden;background:var(--bg-paper);padding:0 32px">
+        <table class="spec-table">
+          <tr><td>Model</td><td style="font-family:'Fraunces',serif;font-size:15px">Nua Nest</td></tr>
+          <tr><td>Collection</td><td style="font-family:'Fraunces',serif;font-size:15px">Signature Series</td></tr>
+          <tr><td>Footprint</td><td style="font-family:'Fraunces',serif;font-size:15px">25 m² &nbsp;<span style="font-size:12px;color:var(--text-mute)">11.5 × 2.15 m</span></td></tr>
+          <tr><td>Overall height</td><td style="font-family:'Fraunces',serif;font-size:15px">2.50 m</td></tr>
+          <tr><td>Configuration</td><td style="font-family:'Fraunces',serif;font-size:15px">Open-plan &nbsp;<span style="font-size:12px;color:var(--text-mute)">Living, sleeping, bathroom</span></td></tr>
+          <tr><td>Capacity</td><td style="font-family:'Fraunces',serif;font-size:15px">1 – 2 occupants</td></tr>
+          <tr><td>Delivery</td><td style="font-family:'Fraunces',serif;font-size:15px">Single-lift &nbsp;<span style="font-size:12px;color:var(--text-mute)">Fully assembled</span></td></tr>
+          <tr><td>Certification</td><td style="font-family:'Fraunces',serif;font-size:15px">CE · ISO · TÜV</td></tr>
+          <tr><td>Warranty</td><td style="font-family:'Fraunces',serif;font-size:15px">30 years &nbsp;<span style="font-size:12px;color:var(--text-mute)">Frame &amp; panel system</span></td></tr>
+          <tr><td>Price</td><td style="font-family:'Fraunces',serif;font-size:15px">Price on request</td></tr>
+        </table>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- PRINCIPAL FEATURES -->
+<section class="section" style="background:var(--bg-cream)">
+  <div class="wrap">
+    <div style="display:grid;grid-template-columns:1fr 1fr;gap:64px;align-items:start" class="features-grid">
+      <div>
+        <p class="eyebrow fade-up" style="margin-bottom:16px">Principal Features</p>
+        <h2 class="fade-up" style="font-size:clamp(30px,3.5vw,42px);line-height:1.05;margin-bottom:32px">A complete home,<br /><em>ready from day one.</em></h2>
+        <div class="feature-list fade-up">
+          <div class="feature-item"><div class="feature-dot"></div><p style="font-size:15px;line-height:1.7;color:rgba(14,26,18,0.7)">Precision-engineered structural shell with reinforced seismic-rated steel chassis and aviation-grade aluminium cladding finished in matte fluorocarbon.</p></div>
+          <div class="feature-item"><div class="feature-dot"></div><p style="font-size:15px;line-height:1.7;color:rgba(14,26,18,0.7)">Three-layer thermal envelope with 100 mm combined high-density polyurethane insulation — year-round comfort with minimal energy demand.</p></div>
+          <div class="feature-item"><div class="feature-dot"></div><p style="font-size:15px;line-height:1.7;color:rgba(14,26,18,0.7)">Full-height panoramic curtain wall with double-tempered Low-E glazing and thermal-break framing — acoustic isolation and solar control.</p></div>
+          <div class="feature-item"><div class="feature-dot"></div><p style="font-size:15px;line-height:1.7;color:rgba(14,26,18,0.7)">Fully fitted en-suite bathroom with smart bidet-toilet, multi-function bath unit and integrated overhead shower — finished to a boutique hotel standard.</p></div>
+          <div class="feature-item"><div class="feature-dot"></div><p style="font-size:15px;line-height:1.7;color:rgba(14,26,18,0.7)">Integrated smart-pod system with voice command and a centralised control panel governing lighting, climate, audio and motorised drapery.</p></div>
+          <div class="feature-item"><div class="feature-dot"></div><p style="font-size:15px;line-height:1.7;color:rgba(14,26,18,0.7)">Optional fitted kitchen, electric underfloor heating, projector with motorised screen and antifreeze package.</p></div>
+        </div>
+      </div>
+      <div class="fade-up" style="background:var(--bg-paper);border:1px solid var(--rule);border-radius:4px;overflow:hidden">
+        <img src="brand_assets/nua-nest-backgarden.jpg" alt="Nua Nest pod in a garden setting" style="width:100%;height:320px;object-fit:cover;display:block" />
+        <div style="padding:28px">
+          <p class="eyebrow" style="color:var(--brand-sage);margin-bottom:8px">Nua Modular Signature Series</p>
+          <p style="font-size:14px;line-height:1.65;color:var(--text-mute)">Every Nua Nest is finished to an extremely high quality standard — discreet, tactile and quietly luxurious, suited to permanent residences, guest accommodation, holiday lettings and garden annexes.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- TECHNICAL SPECIFICATIONS -->
+<section id="specifications" class="section" style="background:var(--bg-paper)">
+  <div class="wrap">
+    <div style="margin-bottom:64px">
+      <p class="eyebrow fade-up" style="margin-bottom:16px">Technical Specifications</p>
+      <h2 class="fade-up" style="font-size:clamp(30px,3.5vw,42px);line-height:1.05;max-width:520px">The standard configuration,<br />in full detail.</h2>
+      <p class="fade-up" style="font-size:15px;line-height:1.7;color:rgba(14,26,18,0.55);max-width:560px;margin-top:16px">Every element pre-installed and commissioned before delivery. Ready to connect on site.</p>
+    </div>
+    <div class="fade-up">
+      <table class="spec-table">
+        <tr style="border-bottom:2px solid var(--rule)">
+          <td colspan="2" style="padding:0 0 14px;font-size:11px;font-weight:700;letter-spacing:0.12em;text-transform:uppercase;color:var(--text-mute)">Construction &amp; Fabric</td>
+        </tr>
+        <tr><td>Primary frame</td><td>Reinforced seismic-rated steel structure</td></tr>
+        <tr><td>External cladding</td><td>Fluorocarbon-coated aviation-grade aluminium panel</td></tr>
+        <tr><td>Roof system</td><td>Fluorocarbon-coated aluminium with sealed weather membrane</td></tr>
+        <tr><td>Insulation</td><td>50 mm high-density polyurethane board with 50 mm closed-cell polyurethane foam infill</td></tr>
+        <tr><td>Glazing</td><td>Double-tempered insulated Low-E glass (6 + 12A + 6 mm) with thermal-break frames and integrated insect screens</td></tr>
+        <tr><td>Floor build-up</td><td>Cement-fibre subfloor with engineered waterproof composite finish</td></tr>
+        <tr><td>Interior walls</td><td>Bamboo-charcoal composite wall linings with brushed aluminium ceiling</td></tr>
+        <tr><td>Interior flooring</td><td>Engineered timber-look composite (interior); 23 mm composite decking (balcony)</td></tr>
+        <tr><td>Entry</td><td>Weather-sealed door with integrated smart access control</td></tr>
+        <tr><td>Life safety</td><td>Integrated smoke detector with continuous monitoring</td></tr>
+        <tr><td>Water services</td><td>Pre-installed antifreeze trace heating to all pipework</td></tr>
+        <tr style="border-bottom:2px solid var(--rule)">
+          <td colspan="2" style="padding:32px 0 14px;font-size:11px;font-weight:700;letter-spacing:0.12em;text-transform:uppercase;color:var(--text-mute)">Systems &amp; Technology</td>
+        </tr>
+        <tr><td>Smart control</td><td>Whole-pod voice-activated system with central touch panel and card-key access</td></tr>
+        <tr><td>Climate</td><td>Twin inverter-driven wall-mounted air conditioners (1.5 hp class) with heating mode</td></tr>
+        <tr><td>Ventilation</td><td>Continuous fresh-air circulation system</td></tr>
+        <tr><td>Hot water</td><td>Storage water heater serving bathroom and optional kitchen</td></tr>
+        <tr><td>Interior lighting</td><td>Recessed three-temperature LED downlights; perimeter cove lighting; warm 3000 K default</td></tr>
+        <tr><td>Bathroom lighting</td><td>Integrated ceiling light with heating, ventilation and air-warming functions</td></tr>
+        <tr><td>Exterior lighting</td><td>Concealed 4000 K LED perimeter strip and multi-colour accent strip beneath the eave</td></tr>
+        <tr><td>Audio</td><td>Integrated in-ceiling sound system, voice-addressable</td></tr>
+        <tr><td>Window treatments</td><td>Motorised electric curtains on metal tracking; motorised exterior sunshade</td></tr>
+        <tr><td>Power</td><td>Card-activated mains supply with master isolator and surge protection</td></tr>
+        <tr><td>Switchgear</td><td>European-specification fittings throughout</td></tr>
+        <tr><td>Optional</td><td>Fitted kitchen · electric underfloor heating · projector with motorised screen · road-tow chassis</td></tr>
+      </table>
+    </div>
+  </div>
+</section>
+
+<!-- BATHROOM -->
+<section class="section" style="background:var(--bg-cream)">
+  <div class="wrap">
+    <div style="display:grid;grid-template-columns:1fr 1fr;gap:64px;align-items:start" class="bathroom-grid">
+      <div>
+        <p class="eyebrow fade-up" style="margin-bottom:16px">Bathroom</p>
+        <h2 class="fade-up" style="font-size:clamp(30px,3.5vw,42px);line-height:1.05;margin-bottom:20px">A boutique<br /><em>finish, as standard.</em></h2>
+        <p class="fade-up" style="font-size:15px;line-height:1.75;color:rgba(14,26,18,0.62)">The Nua Nest includes a fully fitted en-suite finished to a specification more commonly seen in boutique hotels. All sanitaryware is pre-installed and commissioned prior to delivery.</p>
+      </div>
+      <div class="fade-up">
+        <table class="spec-table">
+          <tr><td>WC</td><td>Smart bidet-toilet with integrated controls</td></tr>
+          <tr><td>Vanity</td><td>Wash basin with single-lever mixer tap</td></tr>
+          <tr><td>Shower</td><td>Overhead rain shower with hand-held attachment</td></tr>
+          <tr><td>Bath unit</td><td>Multi-function integrated bath master with heating, ventilation and warm-air functions</td></tr>
+          <tr><td>Privacy screen</td><td>Frosted tempered glass partition</td></tr>
+          <tr><td>Accessories</td><td>Towel rail, integrated mirror and storage</td></tr>
+        </table>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- STRUCTURE BREAKDOWN -->
+<section class="section" style="background:var(--bg-cream)">
+  <div class="wrap">
+    <div style="margin-bottom:48px">
+      <p class="eyebrow fade-up" style="margin-bottom:16px">How It's Built</p>
+      <h2 class="fade-up" style="font-size:clamp(30px,3.5vw,42px);line-height:1.05;max-width:520px">Engineered<br /><em>from the inside out.</em></h2>
+      <p class="fade-up" style="font-size:15px;line-height:1.7;color:rgba(14,26,18,0.55);max-width:560px;margin-top:16px">Every layer of the Nua Nest is purpose-built — from the seismic-rated steel chassis to the fluorocarbon-coated aluminium skin.</p>
+    </div>
+    <div class="fade-up" style="border:1px solid var(--rule);border-radius:4px;overflow:hidden;background:var(--bg-paper)">
+      <img src="brand_assets/structure-breakdown-clearer.jpg" alt="Nua pod structure breakdown diagram"
+           style="width:100%;height:auto;display:block" />
+    </div>
+  </div>
+</section>
+
+<!-- INTERIOR FINISHES -->
+<section class="section" style="background:var(--brand-deep)">
+  <div class="wrap">
+    <div style="display:grid;grid-template-columns:1fr 1fr;gap:64px;align-items:center" class="finishes-grid">
+      <div>
+        <p class="eyebrow fade-up" style="margin-bottom:16px;color:rgba(74,139,92,0.85)">Interior Finishes</p>
+        <h2 class="fade-up" style="font-size:clamp(30px,3.5vw,42px);line-height:1.05;color:#F5F2EB;margin-bottom:20px">Warm, calm,<br /><em>quietly luxurious.</em></h2>
+        <p class="fade-up" style="font-size:15px;line-height:1.75;color:rgba(245,242,235,0.5)">The standard Nua Nest interior is finished to a refined, neutral palette. Bespoke configurations are developed in consultation with each client.</p>
+      </div>
+      <div class="fade-up" style="display:flex;flex-direction:column;gap:20px">
+        <div style="padding:24px;border:1px solid rgba(74,139,92,0.2);border-radius:4px"><p style="font-size:13px;font-weight:600;color:var(--brand-sage);margin-bottom:6px;letter-spacing:0.06em;text-transform:uppercase">Walls</p><p style="font-size:14px;line-height:1.65;color:rgba(245,242,235,0.55)">Bamboo-charcoal composite panelling — warm and calm with passive air-quality benefits.</p></div>
+        <div style="padding:24px;border:1px solid rgba(74,139,92,0.2);border-radius:4px"><p style="font-size:13px;font-weight:600;color:var(--brand-sage);margin-bottom:6px;letter-spacing:0.06em;text-transform:uppercase">Ceiling</p><p style="font-size:14px;line-height:1.65;color:rgba(245,242,235,0.55)">Brushed aluminium panelling, seamless and light-reflective.</p></div>
+        <div style="padding:24px;border:1px solid rgba(74,139,92,0.2);border-radius:4px"><p style="font-size:13px;font-weight:600;color:var(--brand-sage);margin-bottom:6px;letter-spacing:0.06em;text-transform:uppercase">Flooring</p><p style="font-size:14px;line-height:1.65;color:rgba(245,242,235,0.55)">High-grade engineered timber-look composite with click-lock installation.</p></div>
+        <div style="padding:24px;border:1px solid rgba(74,139,92,0.2);border-radius:4px"><p style="font-size:13px;font-weight:600;color:var(--brand-sage);margin-bottom:6px;letter-spacing:0.06em;text-transform:uppercase">Lighting</p><p style="font-size:14px;line-height:1.65;color:rgba(245,242,235,0.55)">Warm 3000 K interior with continuous LED cove detail; cooler 4000 K exterior accent.</p></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- APPLICATIONS -->
+<section class="section" style="background:var(--bg-cream)">
+  <div class="wrap">
+    <div style="margin-bottom:48px">
+      <p class="eyebrow fade-up" style="margin-bottom:16px">Applications</p>
+      <h2 class="fade-up" style="font-size:clamp(30px,3.5vw,42px);line-height:1.05;max-width:480px">One pod,<br /><em>many lives.</em></h2>
+    </div>
+    <div class="apps-grid fade-up" style="border:1px solid var(--rule);border-radius:4px;overflow:hidden">
+      <div style="padding:32px;background:var(--bg-paper)"><h3 style="font-size:19px;margin-bottom:10px">Private Residence</h3><p style="font-size:14px;line-height:1.65;color:var(--text-mute)">Permanent or part-time living, multi-generational annexe or a self-contained extension to the family home. Independent, private and fully serviced.</p></div>
+      <div style="padding:32px;background:var(--bg-paper);border-left:1px solid var(--rule)"><h3 style="font-size:19px;margin-bottom:10px">Guest Suite</h3><p style="font-size:14px;line-height:1.65;color:var(--text-mute)">A beautiful, self-contained space for visiting family and friends. The quality of a boutique hotel, in your own garden.</p></div>
+      <div style="padding:32px;background:var(--bg-paper);border-left:1px solid var(--rule)"><h3 style="font-size:19px;margin-bottom:10px">Holiday Let</h3><p style="font-size:14px;line-height:1.65;color:var(--text-mute)">A boutique short-stay rental with the finish and technology guests expect. Architecturally resolved and ready to let.</p></div>
+    </div>
+  </div>
+</section>
+
+<!-- BESPOKE + CTA -->
+<section class="section" style="background:var(--bg-paper)">
+  <div class="wrap" style="max-width:680px;text-align:center">
+    <p class="eyebrow fade-up" style="margin-bottom:20px">Bespoke Commissions</p>
+    <h2 class="fade-up" style="font-size:clamp(34px,4vw,52px);line-height:1.05;margin-bottom:20px">Built around<br /><em>your project.</em></h2>
+    <p class="fade-up" style="font-size:16px;line-height:1.75;color:rgba(14,26,18,0.6);margin-bottom:36px">Every element of the Nua Nest — from internal layout and glazing configuration to smart-system specification and exterior palette — can be tailored to your requirements. Our design team works directly with clients, architects and operators to develop pods that complement their site, brand and end-use.</p>
+    <div class="fade-up" style="display:flex;flex-wrap:wrap;justify-content:center;gap:12px;margin-bottom:28px">
+      <a href="/#contact" class="btn btn-primary">Request a Quote</a>
+      <a href="tel:+353874409424" class="btn btn-secondary">Call 087 440 9424</a>
+    </div>
+    <p class="fade-up" style="font-size:13px;color:var(--text-mute)">Or email <a href="mailto:contact@nuamodular.com" style="color:var(--brand);text-decoration:none">contact@nuamodular.com</a></p>
+  </div>
+</section>
+
+<footer style="background:var(--brand-deep);padding:48px 24px 32px">
+  <div class="wrap">
+    <div style="display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:20px;padding-bottom:32px;border-bottom:1px solid rgba(74,139,92,0.18);margin-bottom:28px">
+      <div>
+        <img src="brand_assets/nua-logo.png" alt="Nua Modular" style="height:48px;width:auto;filter:brightness(0) invert(1);opacity:0.75;margin-bottom:8px;display:block" />
+        <p style="font-size:12px;color:rgba(245,242,235,0.3);letter-spacing:0.12em;text-transform:uppercase">Live Better, Build Smarter</p>
+      </div>
+      <div style="display:flex;gap:32px;flex-wrap:wrap">
+        <a href="/" style="font-size:13px;color:rgba(245,242,235,0.4);text-decoration:none;letter-spacing:0.08em;text-transform:uppercase">Home</a>
+        <a href="/#models" style="font-size:13px;color:rgba(245,242,235,0.4);text-decoration:none;letter-spacing:0.08em;text-transform:uppercase">Models</a>
+        <a href="/#contact" style="font-size:13px;color:rgba(245,242,235,0.4);text-decoration:none;letter-spacing:0.08em;text-transform:uppercase">Contact</a>
+      </div>
+    </div>
+    <div style="display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:12px">
+      <p style="font-size:12px;color:rgba(245,242,235,0.22)">© 2026 Nua Modular Ltd. All rights reserved. Registered in Ireland.</p>
+      <p style="font-size:12px;color:rgba(245,242,235,0.22)">nuamodular.ie</p>
+    </div>
+  </div>
+</footer>
+
+<script>
+  const nav=document.getElementById('nav');
+  window.addEventListener('scroll',()=>{nav.classList.toggle('scrolled',window.scrollY>40)},{passive:true});
+  document.getElementById('menu-btn').addEventListener('click',()=>{document.getElementById('mobile-menu').classList.add('open')});
+  document.getElementById('menu-close').addEventListener('click',()=>{document.getElementById('mobile-menu').classList.remove('open')});
+  document.querySelectorAll('.mobile-nav-link').forEach(l=>{l.addEventListener('click',()=>document.getElementById('mobile-menu').classList.remove('open'))});
+  const observer=new IntersectionObserver(entries=>{entries.forEach(e=>{if(e.isIntersecting){e.target.classList.add('in');observer.unobserve(e.target)}})},{threshold:0.08,rootMargin:'0px 0px -40px 0px'});
+  document.querySelectorAll('.fade-up').forEach(el=>observer.observe(el));
+  function handleGrids(){
+    const m=window.innerWidth<=900;
+    const g=(el,d,mob)=>{if(el)el.style.cssText=m?mob:d};
+    g(document.querySelector('.overview-grid'),'grid-template-columns:1fr 2fr;gap:80px;align-items:start','grid-template-columns:1fr;gap:40px');
+    g(document.querySelector('.features-grid'),'grid-template-columns:1fr 1fr;gap:64px;align-items:start','grid-template-columns:1fr;gap:40px');
+    g(document.querySelector('.bathroom-grid'),'grid-template-columns:1fr 1fr;gap:64px;align-items:start','grid-template-columns:1fr;gap:40px');
+    g(document.querySelector('.finishes-grid'),'grid-template-columns:1fr 1fr;gap:64px;align-items:center','grid-template-columns:1fr;gap:40px');
+  }
+  handleGrids();
+  window.addEventListener('resize',handleGrids);
+</script>
+</body>
+</html>
