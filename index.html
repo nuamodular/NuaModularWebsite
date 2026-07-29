@@ -151,7 +151,6 @@
 
     /* RESPONSIVE */
     .grid-2 { display: grid; grid-template-columns: 1fr 1fr; gap: 64px; align-items: center; }
-    .grid-3 { display: grid; grid-template-columns: repeat(3,1fr); gap: 24px; }
     .grid-4 { display: grid; grid-template-columns: repeat(4,1fr); gap: 8px; }
     .grid-aside { display: grid; grid-template-columns: 1fr 2fr; gap: 80px; align-items: start; }
     .grid-footer { display: grid; grid-template-columns: 2fr 1fr 1fr; gap: 48px; }
@@ -159,7 +158,6 @@
     @media (max-width: 900px) {
       .section { padding: 64px 20px; }
       .grid-2 { grid-template-columns: 1fr; gap: 40px; }
-      .grid-3 { grid-template-columns: 1fr; }
       .grid-4 { grid-template-columns: 1fr 1fr; }
       .grid-aside { grid-template-columns: 1fr; gap: 40px; }
       .grid-footer { grid-template-columns: 1fr 1fr; }
@@ -263,8 +261,8 @@
   <div class="wrap">
     <div class="stats-grid" style="display:grid;grid-template-columns:repeat(3,1fr);gap:0">
       <div style="text-align:center;padding:0 24px;border-right:1px solid rgba(74,139,92,0.25)">
-        <p style="font-family:'Fraunces',serif;font-size:42px;font-weight:400;color:#F5F2EB;line-height:1;margin-bottom:6px">3<span style="color:var(--brand-sage)">+</span></p>
-        <p class="eyebrow" style="color:rgba(245,242,235,0.45)">Models</p>
+        <p style="font-family:'Fraunces',serif;font-size:42px;font-weight:400;color:#F5F2EB;line-height:1;margin-bottom:6px">38.7<span style="color:var(--brand-sage);font-size:28px"> m²</span></p>
+        <p class="eyebrow" style="color:rgba(245,242,235,0.45)">Footprint</p>
       </div>
       <div style="text-align:center;padding:0 24px;border-right:1px solid rgba(74,139,92,0.25)">
         <p style="font-family:'Fraunces',serif;font-size:42px;font-weight:400;color:#F5F2EB;line-height:1;margin-bottom:6px">Turn<span style="color:var(--brand-sage)">key</span></p>
@@ -308,67 +306,11 @@
     <div style="margin-bottom:56px">
       <p class="eyebrow fade-up" style="margin-bottom:16px">Our Range</p>
       <h2 class="fade-up" style="font-size:clamp(34px,4vw,48px);line-height:1.05;max-width:500px">
-        Three models.<br />One for every need.
+        Our flagship model,<br /><em>in stock now.</em>
       </h2>
     </div>
 
-    <div class="grid-3">
-
-      <!-- Nua Focus -->
-      <div class="fade-up" style="border:1px solid var(--rule);border-radius:4px;overflow:hidden;background:var(--bg-paper)">
-        <a href="nua-focus.html" class="img-wrap" style="position:relative;display:block;cursor:pointer">
-          <img src="brand_assets/nua-focus-garden.jpg"
-               alt="Nua Focus compact garden pod"
-               class="card-img" style="width:100%;height:280px;object-fit:cover;display:block" />
-          <div style="position:absolute;inset:0;background:linear-gradient(to top,rgba(14,26,18,0.35) 0%,transparent 55%)"></div>
-        </a>
-        <div style="padding:28px">
-          <p class="eyebrow" style="color:var(--brand-sage);margin-bottom:10px">Office · Studio · Retreat</p>
-          <h3 style="font-size:26px;margin-bottom:12px">Nua Focus</h3>
-          <p style="font-size:15px;line-height:1.65;color:rgba(14,26,18,0.62);margin-bottom:24px">
-            Our compact pod. 6 m² of fully insulated, wired space, ideal as a garden office, creative studio or quiet retreat, steps from the house.
-          </p>
-          <hr class="rule-line" style="margin-bottom:20px" />
-          <div style="display:flex;align-items:center;justify-content:space-between">
-            <div>
-              <p class="eyebrow" style="color:var(--text-mute);margin-bottom:2px">Size</p>
-              <p style="font-family:'Fraunces',serif;font-size:18px;color:var(--text-ink)">6 m²</p>
-            </div>
-            <div style="display:flex;gap:8px">
-              <a href="nua-focus.html" class="btn btn-secondary btn-sm">View Specs</a>
-              <a href="#contact" class="btn btn-secondary btn-sm">Enquire</a>
-            </div>
-          </div>
-        </div>
-      </div>
-
-      <!-- Nua Nest -->
-      <div class="fade-up" style="border:1px solid var(--rule);border-radius:4px;overflow:hidden;background:var(--bg-paper)">
-        <a href="nua-nest.html" class="img-wrap" style="position:relative;display:block;cursor:pointer">
-          <img src="brand_assets/nua-nest-backgarden.jpg"
-               alt="Nua Nest garden living pod"
-               class="card-img" style="width:100%;height:280px;object-fit:cover;display:block" />
-          <div style="position:absolute;inset:0;background:linear-gradient(to top,rgba(14,26,18,0.35) 0%,transparent 55%)"></div>
-        </a>
-        <div style="padding:28px">
-          <p class="eyebrow" style="color:var(--brand-sage);margin-bottom:10px">Guest Suite · Granny Flat · Rental</p>
-          <h3 style="font-size:26px;margin-bottom:12px">Nua Nest</h3>
-          <p style="font-size:15px;line-height:1.65;color:rgba(14,26,18,0.62);margin-bottom:24px">
-            A full living pod with kitchenette, bathroom and bedroom. Ideal for guest accommodation, multi-generational living or short-term rental. One-bed configuration.
-          </p>
-          <hr class="rule-line" style="margin-bottom:20px" />
-          <div style="display:flex;align-items:center;justify-content:space-between">
-            <div>
-              <p class="eyebrow" style="color:var(--text-mute);margin-bottom:2px">Config</p>
-              <p style="font-family:'Fraunces',serif;font-size:18px;color:var(--text-ink)">1-bed</p>
-            </div>
-            <div style="display:flex;gap:8px">
-              <a href="nua-nest.html" class="btn btn-secondary btn-sm">View Specs</a>
-              <a href="#contact" class="btn btn-secondary btn-sm">Enquire</a>
-            </div>
-          </div>
-        </div>
-      </div>
+    <div style="max-width:560px;margin:0 auto">
 
       <!-- Nua Ultra -->
       <div class="fade-up" style="border:1px solid var(--rule);border-radius:4px;overflow:hidden;background:var(--bg-paper);position:relative">
@@ -496,31 +438,31 @@
     <div class="fade-up gallery-grid" style="display:grid;grid-template-columns:2fr 1fr 1fr;grid-template-rows:240px 240px 240px;gap:8px">
       <div class="img-wrap" style="grid-row:span 2;border-radius:4px;overflow:hidden">
         <img src="brand_assets/nua-pod-irish-village-v2.jpg"
-             alt="A cluster of Nua pods overlooking the Irish cliffside coast at dusk" class="card-img" style="width:100%;height:100%;object-fit:cover" />
+             alt="A cluster of Nua Ultra pods overlooking the Irish cliffside coast at dusk" class="card-img" style="width:100%;height:100%;object-fit:cover" />
       </div>
       <div class="img-wrap" style="border-radius:4px;overflow:hidden">
-        <img src="brand_assets/nua-focus-garden.jpg"
-             alt="Nua Focus pod in a garden setting" class="card-img" style="width:100%;height:100%;object-fit:cover" />
+        <img src="brand_assets/nua-ultra-real-field.jpg"
+             alt="A real Nua Ultra unit in a green field" class="card-img" style="width:100%;height:100%;object-fit:cover" />
       </div>
       <div class="img-wrap" style="border-radius:4px;overflow:hidden">
-        <img src="brand_assets/nua-nest-beach.jpg"
-             alt="Nua pod on the Irish coast" class="card-img" style="width:100%;height:100%;object-fit:cover" />
+        <img src="brand_assets/nua-ultra-real-yard.jpg"
+             alt="A real Nua Ultra unit on site" class="card-img" style="width:100%;height:100%;object-fit:cover" />
       </div>
       <div class="img-wrap" style="border-radius:4px;overflow:hidden">
-        <img src="brand_assets/nua-pod-forest2.jpg"
-             alt="Nua pod nestled in a misty forest clearing" class="card-img" style="width:100%;height:100%;object-fit:cover" />
+        <img src="brand_assets/nua-pod-vertical-golden.jpg"
+             alt="Nua Ultra pod along a garden path at golden hour" class="card-img" style="width:100%;height:100%;object-fit:cover" />
       </div>
       <div class="img-wrap" style="border-radius:4px;overflow:hidden">
-        <img src="brand_assets/nua-nest-night.jpg"
-             alt="Nua pod illuminated at night" class="card-img" style="width:100%;height:100%;object-fit:cover" />
+        <img src="brand_assets/nua-pod-vertical-twilight.jpg"
+             alt="Nua Ultra pod illuminated at dusk with garden string lights" class="card-img" style="width:100%;height:100%;object-fit:cover" />
       </div>
       <div class="img-wrap" style="grid-column:span 2;border-radius:4px;overflow:hidden">
         <img src="brand_assets/nua-pod-lake-night.jpg"
-             alt="Nua pod reflected on a still lake at night" class="card-img" style="width:100%;height:100%;object-fit:cover" />
+             alt="Nua Ultra pod reflected on a still lake at night" class="card-img" style="width:100%;height:100%;object-fit:cover" />
       </div>
       <div class="img-wrap" style="border-radius:4px;overflow:hidden">
-        <img src="brand_assets/nua-pod-seaside_v2.jpg"
-             alt="Nua pod by the seaside" class="card-img" style="width:100%;height:100%;object-fit:cover" />
+        <img src="brand_assets/nua-ultra-real-yard-cloudy.jpg"
+             alt="A real Nua Ultra unit on site under cloudy skies" class="card-img" style="width:100%;height:100%;object-fit:cover" />
       </div>
     </div>
   </div>
@@ -614,22 +556,6 @@
             onfocus="this.style.borderColor='#1E5132'" onblur="this.style.borderColor='rgba(30,81,50,0.18)'" />
         </div>
         <div>
-          <label style="display:block;font-size:13px;font-weight:500;color:var(--text-ink);margin-bottom:6px">Model of interest</label>
-          <div style="position:relative">
-            <select name="model" style="width:100%;padding:11px 14px;background:var(--bg-paper);border:1px solid var(--rule);border-radius:6px;font-family:'Inter',sans-serif;font-size:15px;color:var(--text-ink);outline:none;appearance:none"
-              onfocus="this.style.borderColor='#1E5132'" onblur="this.style.borderColor='rgba(30,81,50,0.18)'">
-              <option value="">Select a model…</option>
-              <option>Nua Focus</option>
-              <option>Nua Nest</option>
-              <option>Nua Ultra</option>
-              <option>Not sure yet</option>
-            </select>
-            <svg width="12" height="7" viewBox="0 0 12 7" fill="none" style="position:absolute;right:14px;top:50%;transform:translateY(-50%);pointer-events:none;color:var(--text-mute)">
-              <path d="M1 1l5 5 5-5" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/>
-            </svg>
-          </div>
-        </div>
-        <div>
           <label style="display:block;font-size:13px;font-weight:500;color:var(--text-ink);margin-bottom:6px">
             Message <span style="color:var(--text-mute);font-weight:400">(optional)</span>
           </label>
@@ -671,8 +597,6 @@
       <div>
         <p class="eyebrow" style="color:rgba(74,139,92,0.75);margin-bottom:20px">Models</p>
         <ul style="list-style:none;display:flex;flex-direction:column;gap:10px">
-          <li><a href="#models" style="font-size:14px;color:rgba(245,242,235,0.45);text-decoration:none;transition:color 0.2s" onmouseover="this.style.color='rgba(245,242,235,0.85)'" onmouseout="this.style.color='rgba(245,242,235,0.45)'">Nua Focus</a></li>
-          <li><a href="#models" style="font-size:14px;color:rgba(245,242,235,0.45);text-decoration:none;transition:color 0.2s" onmouseover="this.style.color='rgba(245,242,235,0.85)'" onmouseout="this.style.color='rgba(245,242,235,0.45)'">Nua Nest</a></li>
           <li><a href="#models" style="font-size:14px;color:rgba(245,242,235,0.45);text-decoration:none;transition:color 0.2s" onmouseover="this.style.color='rgba(245,242,235,0.85)'" onmouseout="this.style.color='rgba(245,242,235,0.45)'">Nua Ultra</a></li>
         </ul>
       </div>
