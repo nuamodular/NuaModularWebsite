@@ -16,7 +16,7 @@ const next = nums.length ? Math.max(...nums) + 1 : 1;
 const filename = label ? `screenshot-${next}-${label}.png` : `screenshot-${next}.png`;
 const outPath = path.join(dir, filename);
 
-const browser = await puppeteer.launch({ headless: 'new', args: ['--no-sandbox'] });
+const browser = await puppeteer.launch({ headless: 'new', args: ['--no-sandbox'], executablePath: '/Applications/Google Chrome.app/Contents/MacOS/Google Chrome' });
 const page = await browser.newPage();
 await page.setViewport({ width: 1440, height: 900, deviceScaleFactor: 2 });
 await page.goto(url, { waitUntil: 'networkidle0', timeout: 30000 });
