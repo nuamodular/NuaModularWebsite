@@ -94,6 +94,25 @@
       letter-spacing: 0.22em; text-transform: uppercase; color: var(--brand-sage);
     }
 
+    /* FORM FIELDS */
+    .field-label {
+      display: block; font-size: 13px; font-weight: 500;
+      color: var(--text-ink); margin-bottom: 6px;
+    }
+    .field-optional { color: var(--text-mute); font-weight: 400; }
+    .field-help { font-size: 12px; color: var(--text-mute); margin-top: 6px; }
+    .field-input {
+      width: 100%; padding: 11px 14px;
+      background: var(--bg-paper); border: 1px solid var(--rule); border-radius: 6px;
+      font-family: 'Inter', sans-serif; font-size: 15px; color: var(--text-ink); outline: none;
+    }
+    .field-select {
+      appearance: none; -webkit-appearance: none;
+      background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='8' viewBox='0 0 12 8'%3E%3Cpath d='M1 1l5 5 5-5' stroke='%237A857E' stroke-width='1.5' fill='none' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E");
+      background-repeat: no-repeat; background-position: right 14px center;
+      padding-right: 36px; cursor: pointer;
+    }
+
     /* BUTTONS */
     .btn {
       display: inline-flex; align-items: center; justify-content: center;
@@ -568,42 +587,136 @@
       </div>
     </div>
 
-    <form class="fade-up" style="background:var(--bg-paper);border-radius:4px;padding:40px" action="https://formspree.io/f/xpqbnkbj" method="POST">
-      <h3 style="font-size:23px;margin-bottom:28px">Book a free consultation</h3>
+    <form class="fade-up" id="enquiry-form" style="background:var(--bg-paper);border-radius:4px;padding:40px">
+      <h3 style="font-size:23px;margin-bottom:6px">Book a free consultation</h3>
+      <p style="font-size:13px;line-height:1.6;color:var(--text-mute);margin-bottom:28px">
+        The more you tell us about the site, the faster we can confirm feasibility.
+      </p>
       <div style="display:flex;flex-direction:column;gap:16px">
         <div>
-          <label style="display:block;font-size:13px;font-weight:500;color:var(--text-ink);margin-bottom:6px">Name</label>
-          <input type="text" name="name" placeholder="Your name"
-            style="width:100%;padding:11px 14px;background:var(--bg-paper);border:1px solid var(--rule);border-radius:6px;font-family:'Inter',sans-serif;font-size:15px;color:var(--text-ink);outline:none"
+          <label class="field-label">What are you looking for?</label>
+          <select name="enquiry_type" required class="field-input field-select"
+            onfocus="this.style.borderColor='#1E5132'" onblur="this.style.borderColor='rgba(30,81,50,0.18)'">
+            <option value="">Select…</option>
+            <option value="single">Just one unit, for my own back garden</option>
+            <option value="multi">Multi-unit development — Airbnb / glamping village</option>
+          </select>
+        </div>
+        <div>
+          <label class="field-label">Name</label>
+          <input type="text" name="name" required placeholder="Your name" class="field-input"
             onfocus="this.style.borderColor='#1E5132'" onblur="this.style.borderColor='rgba(30,81,50,0.18)'" />
         </div>
         <div>
-          <label style="display:block;font-size:13px;font-weight:500;color:var(--text-ink);margin-bottom:6px">Email</label>
-          <input type="email" name="email" placeholder="your@email.com"
-            style="width:100%;padding:11px 14px;background:var(--bg-paper);border:1px solid var(--rule);border-radius:6px;font-family:'Inter',sans-serif;font-size:15px;color:var(--text-ink);outline:none"
+          <label class="field-label">Email</label>
+          <input type="email" name="email" required placeholder="your@email.com" class="field-input"
             onfocus="this.style.borderColor='#1E5132'" onblur="this.style.borderColor='rgba(30,81,50,0.18)'" />
         </div>
         <div>
-          <label style="display:block;font-size:13px;font-weight:500;color:var(--text-ink);margin-bottom:6px">Phone number</label>
-          <input type="tel" name="phone" placeholder="087 123 4567"
-            style="width:100%;padding:11px 14px;background:var(--bg-paper);border:1px solid var(--rule);border-radius:6px;font-family:'Inter',sans-serif;font-size:15px;color:var(--text-ink);outline:none"
+          <label class="field-label">Phone number</label>
+          <input type="tel" name="phone" placeholder="087 123 4567" class="field-input"
             onfocus="this.style.borderColor='#1E5132'" onblur="this.style.borderColor='rgba(30,81,50,0.18)'" />
         </div>
         <div>
-          <label style="display:block;font-size:13px;font-weight:500;color:var(--text-ink);margin-bottom:6px">Eircode / Postcode</label>
-          <input type="text" name="eircode" placeholder="R95 A0PY"
-            style="width:100%;padding:11px 14px;background:var(--bg-paper);border:1px solid var(--rule);border-radius:6px;font-family:'Inter',sans-serif;font-size:15px;color:var(--text-ink);outline:none"
+          <label class="field-label">Eircode / Postcode</label>
+          <input type="text" name="eircode" placeholder="R95 A0PY" class="field-input"
             onfocus="this.style.borderColor='#1E5132'" onblur="this.style.borderColor='rgba(30,81,50,0.18)'" />
         </div>
+
+        <p class="eyebrow" style="margin-top:8px">Project</p>
+
         <div>
-          <label style="display:block;font-size:13px;font-weight:500;color:var(--text-ink);margin-bottom:6px">
-            Message <span style="color:var(--text-mute);font-weight:400">(optional)</span>
+          <label class="field-label">Which pod are you interested in? <span class="field-optional">(optional)</span></label>
+          <select name="product_interest" class="field-input field-select"
+            onfocus="this.style.borderColor='#1E5132'" onblur="this.style.borderColor='rgba(30,81,50,0.18)'">
+            <option value="">Select…</option>
+            <option value="ultra">Nua Ultra (€70,000)</option>
+            <option value="not_sure">Not sure yet</option>
+          </select>
+        </div>
+        <div>
+          <label class="field-label">Budget <span class="field-optional">(optional)</span></label>
+          <select name="budget" class="field-input field-select"
+            onfocus="this.style.borderColor='#1E5132'" onblur="this.style.borderColor='rgba(30,81,50,0.18)'">
+            <option value="">Select…</option>
+            <option value="under_40k">Under €40k</option>
+            <option value="40_55k">€40k–55k</option>
+            <option value="55_70k">€55k–70k</option>
+            <option value="70k_plus">€70k+</option>
+            <option value="prefer_not_say">Prefer not to say</option>
+          </select>
+        </div>
+        <div>
+          <label class="field-label">Timeline <span class="field-optional">(optional)</span></label>
+          <select name="timeline" class="field-input field-select"
+            onfocus="this.style.borderColor='#1E5132'" onblur="this.style.borderColor='rgba(30,81,50,0.18)'">
+            <option value="">Select…</option>
+            <option value="now">Ready to move now</option>
+            <option value="3_6">3–6 months</option>
+            <option value="6_12">6–12 months</option>
+            <option value="researching">Just researching</option>
+          </select>
+        </div>
+
+        <p class="eyebrow" style="margin-top:8px">Site details</p>
+
+        <div>
+          <label class="field-label">Do you own the site? <span class="field-optional">(optional)</span></label>
+          <select name="own_site" class="field-input field-select"
+            onfocus="this.style.borderColor='#1E5132'" onblur="this.style.borderColor='rgba(30,81,50,0.18)'">
+            <option value="">Select…</option>
+            <option value="own_land">Yes, own the land</option>
+            <option value="searching">Currently searching for land</option>
+            <option value="no_land">No land yet</option>
+          </select>
+        </div>
+        <div>
+          <label class="field-label">Plot dimensions <span class="field-optional">(optional)</span></label>
+          <input type="text" name="plot_dimensions" placeholder="e.g. 10m x 6m" class="field-input"
+            onfocus="this.style.borderColor='#1E5132'" onblur="this.style.borderColor='rgba(30,81,50,0.18)'" />
+          <p class="field-help">Rough width x length of where the pod would sit</p>
+        </div>
+        <div>
+          <label class="field-label">Truck/crane access <span class="field-optional">(optional)</span></label>
+          <select name="truck_access" class="field-input field-select"
+            onfocus="this.style.borderColor='#1E5132'" onblur="this.style.borderColor='rgba(30,81,50,0.18)'">
+            <option value="">Select…</option>
+            <option value="clear">Yes, clear access for a truck/crane</option>
+            <option value="not_sure">Not sure</option>
+            <option value="tight">No, access looks tight</option>
+          </select>
+        </div>
+        <div>
+          <label class="field-label">Trees or overhead lines near the site? <span class="field-optional">(optional)</span></label>
+          <select name="trees_powerlines" class="field-input field-select"
+            onfocus="this.style.borderColor='#1E5132'" onblur="this.style.borderColor='rgba(30,81,50,0.18)'">
+            <option value="">Select…</option>
+            <option value="no">No trees or overhead lines near the site</option>
+            <option value="yes">Yes, there are trees or overhead lines</option>
+            <option value="not_sure">Not sure</option>
+          </select>
+        </div>
+        <div>
+          <label class="field-label">Separate side access? <span class="field-optional">(optional)</span></label>
+          <select name="side_access" class="field-input field-select"
+            onfocus="this.style.borderColor='#1E5132'" onblur="this.style.borderColor='rgba(30,81,50,0.18)'">
+            <option value="">Select…</option>
+            <option value="yes">Yes, separate side access (not through the house)</option>
+            <option value="no">No, only through the house</option>
+            <option value="not_sure">Not sure</option>
+          </select>
+        </div>
+
+        <div>
+          <label class="field-label">
+            Message <span class="field-optional">(optional)</span>
           </label>
-          <textarea rows="3" name="message" placeholder="Tell us about your site or project…"
-            style="width:100%;padding:11px 14px;background:var(--bg-paper);border:1px solid var(--rule);border-radius:6px;font-family:'Inter',sans-serif;font-size:15px;color:var(--text-ink);outline:none;resize:none"
+          <textarea rows="3" name="message" placeholder="Tell us about your site or project…" class="field-input"
+            style="resize:none"
             onfocus="this.style.borderColor='#1E5132'" onblur="this.style.borderColor='rgba(30,81,50,0.18)'"></textarea>
         </div>
-        <button type="submit" class="btn btn-primary" style="width:100%;margin-top:4px">Send Enquiry</button>
+        <p id="form-status" style="display:none;font-size:13px;line-height:1.5;color:#B3261E"></p>
+        <button type="submit" id="form-submit" class="btn btn-primary" style="width:100%;margin-top:4px">Send Enquiry</button>
       </div>
     </form>
   </div>
@@ -664,6 +777,32 @@
   window.addEventListener('scroll', () => {
     nav.classList.toggle('scrolled', window.scrollY > 40);
   }, { passive: true });
+
+  const enquiryForm = document.getElementById('enquiry-form');
+  const formStatus = document.getElementById('form-status');
+  const formSubmit = document.getElementById('form-submit');
+  enquiryForm.addEventListener('submit', async (e) => {
+    e.preventDefault();
+    formStatus.style.display = 'none';
+    formSubmit.disabled = true;
+    formSubmit.textContent = 'Sending…';
+    const payload = Object.fromEntries(new FormData(enquiryForm).entries());
+    try {
+      const res = await fetch('/api/enquiry', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(payload),
+      });
+      const data = await res.json();
+      if (!res.ok || !data.ok) throw new Error(data.error || 'Something went wrong.');
+      window.location.href = 'thank-you.html';
+    } catch (err) {
+      formStatus.textContent = "Something went wrong sending your enquiry — please try again, or email contact@nuamodular.com directly.";
+      formStatus.style.display = 'block';
+      formSubmit.disabled = false;
+      formSubmit.textContent = 'Send Enquiry';
+    }
+  });
 
   document.getElementById('menu-btn').addEventListener('click', () => {
     document.getElementById('mobile-menu').classList.add('open');
